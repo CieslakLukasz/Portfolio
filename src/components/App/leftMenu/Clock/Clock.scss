@@ -1,0 +1,36 @@
+.center {
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#clock {
+  font-family: "Orbitron", sans-serif;
+  color: #f1ee23;
+  background-color: black;
+  font-size: calc(1.2rem);
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: 5px solid #361805;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+#analogClock {
+  border-radius: 50%;
+  background: rgb(204,205,207) url("ios_clock.svg") no-repeat center;
+  -webkit-box-shadow: inset -2px -1px 4px 1px rgba(0,0,0,0.48);
+  -moz-box-shadow: inset -2px -3px 4px 1px rgba(0,0,0,0.48);
+  box-shadow: inset -5px -1px 4px 1px rgba(0,0,0,0.48);
+  background-size: 88%;
+  height: 6vw;
+  position: absolute;
+  width: 6vw;
+  bottom:13.2vw;
+  left:22.5vw;
+}

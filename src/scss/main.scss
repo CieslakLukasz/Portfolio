@@ -1,8 +1,11 @@
 @import './reset';
-@import './grid';
 @import './fonts';
+@import './colors';
 
 
 body {
-    background-color: red;
+    background-color: var(--main-color);
+    color: var(--fonts-color);
 }
+
+

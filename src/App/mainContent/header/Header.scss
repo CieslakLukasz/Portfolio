@@ -1,0 +1,24 @@
+.header {
+  width: 100%;
+  height: 90px;
+  display: flex;
+  align-items: center;
+  a {
+    color: var(--fonts-color);
+    display: block;
+    width: 8vw;
+    padding: 2vw;
+    text-decoration: none;
+  }
+  a:hover {
+     background-color: var(--hover-color);
+  }
+}
+
+.navi_list {
+  display: flex;
+  justify-content: center;
+  list-style-type: none;
+}
+
+

@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   position: relative;
-  background-image: url("./desc1.jpg");
+  background-image: url("/assets/images/background/desc1-min.jpg");
   background-repeat: no-repeat;
   background-position: left bottom;
   background-size: 100vw;
@@ -22,7 +22,7 @@
   ;
 }
 
-//usunac pozniej ramki!! -2px w calc !!
+
 .item1 {
   grid-area: a;
   width:100%;
@@ -30,13 +30,13 @@
 
 .item2 {
   grid-area: b;
-  border: 1px solid black;
   width: 100%;
 }
 
-.medias_ul {
+.media_div {
   position: absolute;
-  top:25%;
+  width: 50px;
+  height: fit-content;
+  top:50%;
   left:0;
-  background-color: red;
 }

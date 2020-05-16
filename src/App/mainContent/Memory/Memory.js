@@ -1,18 +1,25 @@
 import React, { useState, useEffect } from "react";
 import uuid from "react-uuid";
 import CounterWatch from "./CounterWatch";
+import Backs from './Backs';
 import "./Memory.scss";
 
 
 
 //funkcja do mieszania tablicy
 const shuffleArray = (array) => array.sort(() => 0.5 - Math.random());
-const generateTable = (pairs) => {
+const generateTable = (pairs, name = "animals") => {
   let arr = [];
+  let x;
   for (let i = 1; i <= pairs; i++) {
-    arr.push(i);
-    arr.push(i);
-  }
+    if(i<10){
+    x = `https://source.unsplash.com/10${i}x100/`
+    arr.push(x,x);
+    }else{
+      x = `https://source.unsplash.com/1${i}x100/`
+      arr.push(x,x);
+    }
+}
   const AllPairs = arr.map((el) => ({
     id: uuid(),
     value: el,
@@ -22,6 +29,7 @@ const generateTable = (pairs) => {
 
   return shuffleArray(AllPairs);
 }
+
 
 
 export default function Memory() {
@@ -36,9 +44,14 @@ export default function Memory() {
   const [watch, setWatch] = useState(false);
   const [next, setNext] = useState(false);
   const [starting, setStarting] = useState(false);
-  const [winW, setWinW] = useState(window.innerWidth)
+  const [winW, setWinW] = useState(window.innerWidth);
+  const [cath, setCath]=useState();
+  const [load, setLoad] =useState(0);
+  const [shuffle, toggleShuffle]= useState('none');
+  const [showBacks, setShowBacks] = useState(false);
+  const [backMenuSrc, setBackMenuSrc]=useState(`/assets/images/memocards/back1.jpg`)
 
-
+//seting wWin na resize'ie
   useEffect(() => {
     const handleResize = () => {
       setWinW(window.innerWidth);
@@ -48,30 +61,45 @@ export default function Memory() {
       window.removeEventListener('resize', handleResize);
     }
   })
-
+//usawienei rzedow i kolumn na 1 razem -> memo na stole
 useEffect(() => {
    colsAndRows();
-    setTab(generateTable(pairs));
+    setTab(generateTable(pairs, cath));
     setTimeout(() => {
       setTab((prev) => prev.map((el) => ({ ...el, isActive: true })));
       setTab((prev) => prev.map((el) => ({ ...el, canBeActive: false })));
     }, 3000);
 }, [])
 
+const handleLoad = () => {
+    setLoad(prev=>prev+1);
+
+    if(load===(2*pairs)){
+      if(shuffle==='shuffling'){toggleShuffle('shuffled')};
+      setTab((prev) => prev.map((el) => ({ ...el, isActive: true })));
+      setTab((prev) => prev.map((el) => ({ ...el, canBeActive: false })));
+      setTimeout(() => {
+        toggleShuffle('none')
+        setTab((prev) => prev.map((el) => ({ ...el, isActive: false })));
+        setTab((prev) => prev.map((el) => ({ ...el, canBeActive: true })));
+        setWatch(true);
+      }, 3000);
+    }
+}
+
   // // na handleClicku wywoluje funkcje ktora generuje mi tablice (funkcja poza komponentem) i zeruje mi liczniki
 const handleClick = () => {
+     toggleShuffle('shuffling')
     setStarting(true);
     reset();
     colsAndRows();
-    setTab(generateTable(pairs));
-    setTimeout(() => {
-      setTab((prev) => prev.map((el) => ({ ...el, isActive: false })));
-      setTab((prev) => prev.map((el) => ({ ...el, canBeActive: true })));
-      setWatch(true);
-    }, 3000);
+    setTab(generateTable(pairs, cath));
+    setTab((prev) => prev.map((el) => ({ ...el, isActive: false })));
+    setTab((prev) => prev.map((el) => ({ ...el, canBeActive: false })));
   };
 
   const reset = () => {
+    setLoad(1);
     setNext(false);
     setCounter(0);
     setSuccesCounter(0);
@@ -95,14 +123,18 @@ const handleClick = () => {
             width: `calc(40vw / ${col})`,
             height: `calc(55vh / ${row})`
           }}
-          className={el.isActive ? `memo${el.value} memo` : 'back memo'}
-          ></div>
+          className={`memo_div` +" "+ (el.isActive ? "" : `flipped` )}
+          >
+          <img onLoad={handleLoad} className="memo" src={el.value}/>
+          <div className="memo back" ><img src={backMenuSrc}/></div>
+        </div>
         </td>
       ));
       newArr.push(oneRow);
     }
     return newArr;
   };
+
   //gdy naciskamy pojedynczy element -> srawdzam czy moze byc aktywowany?
   // jesli moze => ustawam element jest aktywny, element nie moze byc aktywowany, i 1 lub 2gi wybor jako element
   const onObjectClick = (el) => {
@@ -122,6 +154,8 @@ const handleClick = () => {
         el.id === objectId ? { ...el, isActive: isActive } : el
       )
     );
+
+    
   };
 
   // zmiana objCanBeActive - mapuje jak wyzej tylko zmianiam parametr canBeActive
@@ -189,9 +223,16 @@ const stopTable={
   bottom:`calc(100% - 58vh - ${2*rows-2}px)`,
 }
 
+const handleBackClick = (e) =>{
+  setShowBacks(prev=>!prev);
+  setBackMenuSrc(e.target.name)
+}
+
   return (
     <div className="memory_main">
-      <div className="memory_game" >
+    {showBacks ? <Backs handleBackClick={handleBackClick}/> : <div className='backImgDiv'><img className="backImgFirstChoice" src={backMenuSrc} name={backMenuSrc}  onClick={handleBackClick}/><span className='backImgTooltip'>Zmień obrazek</span></div>}
+     <div className="memory_game" >
+      {shuffle==='shuffling'? <p className='shuffleInfo'>Poczekaj na przetasowanie obrazków</p> : (shuffle==='shuffled'? <p className='shuffleInfo'>Zapamietaj obrazki!</p> :null)}
         <table style={starting? stopTable : startTable}>
           {makeRows(rows, cols, tab).map((el, ind) => (
             <tr
@@ -206,12 +247,12 @@ const stopTable={
         <h1>Memory:</h1>
         <label>Ilość par:
         <input
-          onChange={(e) => setPairs(e.target.value > 0 ? e.target.value : 0)}
+          onChange={(e) => setPairs(e.target.value > 2 ? e.target.value : 2)}
           type="number"
-      
+
           value={pairs}
         /></label>
-        {pairs>16 ? <h2 className='cant'>Można max 16 par :(</h2> : <button className="btn" onClick={handleClick}>
+        {pairs>21 ? <h2 className='cant'>Można max 21 par :(</h2> : <button className="btn" onClick={handleClick}>
           Start
         </button>}
         <h2> {next ? "Aby zagrać kliknij start" : <br></br>}</h2>

@@ -200,7 +200,7 @@
   }
 
   .memory_score {
-    background-color: var(--main-color);
+  
     width: 100%;
     flex-direction: row;
     align-items: flex-start;
@@ -208,6 +208,7 @@
     h2 {
       font-size: 0.8rem;
     }
+
   }
   .shuffleInfo {
     top: -4vw;
@@ -216,7 +217,7 @@
   .memory_game {
     margin-top: 3vw;
     width: 90%;
-    z-index: 10000;
+
 
 
     table {

@@ -244,10 +244,11 @@ const handleBackClick = (e) =>{
         </table>
       </div>
       <div className="memory_score" >
+      <div>
         <h1>Memory:</h1>
         <label>Ilość par:
         <input
-          onChange={(e) => setPairs(e.target.value > 2 ? e.target.value : 2)}
+          onChange={(e) => setPairs(e.target.value > 0 ? e.target.value : 0)}
           type="number"
 
           value={pairs}
@@ -256,6 +257,7 @@ const handleBackClick = (e) =>{
           Start
         </button>}
         <h2> {next ? "Aby zagrać kliknij start" : <br></br>}</h2>
+        </div>
         <CounterWatch
           watch={watch}
           counter={counter}

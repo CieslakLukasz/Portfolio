@@ -3,3 +3,22 @@
     width: 100%;
   }
 }
+
+.media_about {
+  margin-top: 5px;
+  display: felx;
+}
+
+.icon {
+  width: 40px;
+  height: 40px;
+  display: inline-block;
+}
+@media (max-width: 800px) {
+.icon {
+  margin: 1px;
+}
+.media_about {
+  display: none;
+}
+}

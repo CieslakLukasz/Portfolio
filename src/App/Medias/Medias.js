@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import "./Medias.scss";
 import { SocialMediaIconsReact } from "social-media-icons-react";
 
-export default function Medias({ el }) {
+export default function Medias({ el, winW }) {
 const [bgColor, setBgColor] = useState(false);
+
+useEffect(() => {
+winW<800 ? setBgColor(true) : setBgColor(false)
+}, [winW])
 
     const handleEnter = () => {
         setBgColor(true)
@@ -13,7 +17,7 @@ const [bgColor, setBgColor] = useState(false);
     }
 
   return (
-      <div onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
+      <div className='icon' onMouseEnter={handleEnter} onMouseLeave={handleLeave}>
     {!bgColor?
      <SocialMediaIconsReact
      borderColor="rgba(0,0,0,0.25)"

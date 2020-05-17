@@ -6,17 +6,17 @@ import Start from './Start/Start'
 import About from './about/About'
 import Memory from './Memory/Memory'
 
-export default function MainContent() {
+export default function MainContent({mediasData, winW}) {
   return (
     <>
       <HashRouter>
-      <Header />
+      <Header winW={winW}/>
         <Switch>
           <Route exact path="/" component={Start} />
-          <Route path="/about" component={About} />
           <Route path="/weather" component={Start} />
           <Route path="/memory" component={Memory} />
           <Route path="/exchange" component={Start} />
+          <Route path="/about" render={() =><About mediasData={mediasData}/>} />
         </Switch>
       </HashRouter>
       <Footer />

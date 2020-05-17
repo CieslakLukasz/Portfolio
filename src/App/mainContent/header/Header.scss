@@ -6,12 +6,12 @@
   a {
     color: var(--fonts-color);
     display: block;
-    width: 8vw;
+    width: 10.4vw;
     padding: 2vw;
     text-decoration: none;
   }
   a:hover {
-     background-color: var(--hover-color);
+    background-color: var(--hover-color);
   }
 }
 
@@ -21,4 +21,12 @@
   list-style-type: none;
 }
 
-
+@media (max-width: 800px) {
+  .header {
+    height: 40px;
+    align-items: flex-start;
+    a {
+      width: 16vw;
+    }
+  }
+}

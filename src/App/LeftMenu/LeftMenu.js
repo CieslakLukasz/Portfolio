@@ -1,5 +1,5 @@
 import React from 'react';
-import Clock from './Clock/Clock';
+
 import './LeftMenu.scss';
 
 export default function LeftMenu() {
@@ -14,7 +14,7 @@ export default function LeftMenu() {
         <p>
         Jako początkujący, pełen zapału tester i programista JavaScript, poszukuję możliwości do rozwoju.</p>
         </div>
-        <Clock />
+
         </div>
     )
 }

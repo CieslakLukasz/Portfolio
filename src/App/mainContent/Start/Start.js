@@ -1,10 +1,10 @@
 import React, { memo } from 'react'
 
 export default function Start() {
-  
+
     return (
         <div>
-start
+Work in progres.
         </div>
     )
 }

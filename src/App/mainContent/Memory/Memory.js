@@ -32,7 +32,7 @@ const generateTable = (pairs, name = "animals") => {
 
 
 
-export default function Memory() {
+export default function Memory({winW}) {
   const [pairs, setPairs] = useState(8);
   const [tab, setTab] = useState([]);
   const [rows, setRows] = useState(0);
@@ -44,23 +44,13 @@ export default function Memory() {
   const [watch, setWatch] = useState(false);
   const [next, setNext] = useState(false);
   const [starting, setStarting] = useState(false);
-  const [winW, setWinW] = useState(window.innerWidth);
   const [cath, setCath]=useState();
   const [load, setLoad] =useState(0);
   const [shuffle, toggleShuffle]= useState('none');
   const [showBacks, setShowBacks] = useState(false);
   const [backMenuSrc, setBackMenuSrc]=useState(`/assets/images/memocards/back1.jpg`)
 
-//seting wWin na resize'ie
-  useEffect(() => {
-    const handleResize = () => {
-      setWinW(window.innerWidth);
-    }
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    }
-  })
+
 //usawienei rzedow i kolumn na 1 razem -> memo na stole
 useEffect(() => {
    colsAndRows();
@@ -113,16 +103,23 @@ const handleClick = () => {
     setRows(Math.ceil((2 * pairs) / Math.ceil(Math.sqrt(2 * pairs))));
   };
 
+  let cardStyle;
+  winW<800 ? cardStyle={
+    width: `calc(70vw / ${cols})`,
+    height: `calc(55vh / ${rows})`
+  }
+  : cardStyle={
+    width: `calc(40vw / ${cols})`,
+    height: `calc(55vh / ${rows})`
+  }
+
   //tworze tablice a tablicami w których są poszczególne rzędy
   const makeRows = (row, col, array) => {
     const newArr = [];
     for (let i = 0; i < row; i++) {
       const oneRow = array.slice(i * col, (i + 1) * col).map((el) => (
         <td key={el.id} onClick={() => onObjectClick(el)} id={el.id} >
-          <div style={{
-            width: `calc(40vw / ${col})`,
-            height: `calc(55vh / ${row})`
-          }}
+          <div style={cardStyle}
           className={`memo_div` +" "+ (el.isActive ? "" : `flipped` )}
           >
           <img onLoad={handleLoad} className="memo" src={el.value}/>

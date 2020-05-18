@@ -6,7 +6,7 @@
 }
 
 .memory_score {
-  background-color: var(--cover-color);
+  background-color: var(--hover-color);
   width: 25%;
   height: fit-content;
   padding-bottom: 2vw;
@@ -195,27 +195,28 @@
 @media (max-width: 800px) {
   .memory_main {
    height: calc(100vh - 40px);
-  justify-content: flex-end;
+  justify-content: center;
 
   }
 
   .memory_score {
-  
+
     width: 100%;
     flex-direction: row;
     align-items: flex-start;
     top: calc(55vh + 50px);
+    z-index: 300;
     h2 {
       font-size: 0.8rem;
     }
 
   }
   .shuffleInfo {
-    top: -4vw;
+    top: -5vw;
   }
 
   .memory_game {
-    margin-top: 3vw;
+    margin-top: 4vw;
     width: 90%;
 
 

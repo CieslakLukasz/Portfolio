@@ -1,0 +1,129 @@
+.toDoMain {
+  width: 100%;
+  height: calc(100vh - 90px);
+  display: flex;
+  position: relative;
+}
+.toDoForm {
+  background-color: var(--hover-color);
+  width: calc(30% - 4vw);
+  height: fit-content;
+  padding-bottom: 2vw;
+  padding: 1vw;
+  margin: 1vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  right: 0;
+  top: 0;
+  form {
+    width: 100%;
+    formset {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      label {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 1px 0;
+      }
+      input[type="text"] {
+        width: 100%;
+      }
+      textarea {
+        max-width: 95%;
+        width: 95%;
+        background-color: var(--main-color);
+      }
+      input,
+      select {
+        color: var(--fonts-color);
+        background-color: var(--main-color);
+      }
+    }
+  }
+}
+
+.toDoCards {
+  width: calc(70% - 6vw);
+  height: fit-content;
+  max-height: calc(100% - 13vw);
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  position: absolute;
+  left: 6vw;
+  .oneTask {
+    width: calc(25% - 16px);
+    height: 10vw;
+    font-size: 1.2vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    filter: saturate(40%);
+    margin: 8px;
+    box-shadow: -8px 3px 18px -4px rgba(0, 0, 0, 0.75);
+    > div {
+      width: 100%;
+      h2 {
+        width: 100%;
+        font-weight: bold;
+        overflow-wrap: break-word;
+        display: flex;
+        justify-content: space-between;
+        span {
+          font-size: 0.8vw;
+        }
+      }
+      h1 {
+        width: 100%;
+        font-weight: bold;
+        overflow-wrap: break-word;
+        display: flex;
+        justify-content: center;
+      }
+    }
+    p {
+      height: fit-content;
+      max-height: calc(100% - 4vw);
+      overflow: hidden;
+    }
+  }
+}
+.oneTask.bigTask {
+  width: 0;
+  height: 0;
+  font-size: 1.2vw;
+  position: absolute;
+  z-index: 10;
+  transition: all 0.5s ease-in-out;
+  overflow: hidden;
+  h1 {
+    margin: 0.5vw;
+  }
+}
+.oneTask.bigTask.transition {
+  width: 100%;
+  height: 40vw;
+  font-size: 1.8vw;
+  position: absolute;
+  box-shadow: -8px 3px 25px 4px rgba(0, 0, 0, 0.75);
+  z-index: 10;
+  transition: all 0.5s ease-in-out;
+  > div {
+      font-size: 2vw;
+    h2 {
+        margin-top: 1vw;
+      span {
+        font-size: 2vw;
+      }
+    }
+  }
+}

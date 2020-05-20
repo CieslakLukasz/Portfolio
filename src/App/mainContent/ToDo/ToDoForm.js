@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import "./ToDo.scss";
 
-export default function ToDoForm({el, ind,  handleTaskSubmit}) {
+export default function ToDoForm({el, ind,  handleTaskSubmit, handleDeleteFromList}) {
   const [oneTask, setOneTask] = useState(el);
   const [err, setErr]=useState('');
 
@@ -27,12 +27,16 @@ export default function ToDoForm({el, ind,  handleTaskSubmit}) {
     handleTaskSubmit(oneTask, false);
   }
 
+  const handleDelete = () => {
+    handleDeleteFromList(oneTask)
+  }
+
 
     return (
         <form onSubmit={handleTaskSubmitOne}>
         <div className='taskHeader'><h2>
-        #{ind + 1} {err ? <p>{err}</p> : null} <div><span>&#128465;</span></div> </h2>
-        <h1><input 
+        #{ind + 1} {err ? <p>{err}</p> : null} <div><span onClick={handleDelete}>&#128465;</span></div> </h2>
+        <h1><input
         type="text"
         name="title"
         value={oneTask.title}

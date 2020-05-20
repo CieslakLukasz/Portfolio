@@ -1,7 +1,7 @@
 import React from "react";
 import ToDoForm from './ToDoForm'
 
-export default function Task({ el, ind, handleTaskSubmit}) {
+export default function Task({ el, ind, handleTaskSubmit, handleDeleteFromList}) {
 
 
   let styleTask = {
@@ -12,6 +12,10 @@ export default function Task({ el, ind, handleTaskSubmit}) {
   const handleClickTaskOne = () => {
       handleTaskSubmit(el, true)
   }
+  const handleDelete = (e) => {
+    e.stopPropagation();
+    handleDeleteFromList(el);
+  }
 
 
 
@@ -20,7 +24,7 @@ export default function Task({ el, ind, handleTaskSubmit}) {
     <div className="oneTask" onClick={handleClickTaskOne} style={styleTask}>
     <div className='circle'></div>
      <div className='taskHeader'><h2>
-        #{ind + 1} <div><span>&#128465;</span></div> </h2>
+        #{ind + 1} <div><span onClick={handleDelete}>&#128465;</span></div> </h2>
         <h1>{el.title}</h1></div>
       <p>{el.description}</p>
       <h2>
@@ -28,7 +32,7 @@ export default function Task({ el, ind, handleTaskSubmit}) {
       </h2>
     </div>
     <div  className={el.edit ? "oneTask bigTask transition" : "oneTask bigTask"} style={{backgroundColor: `#${el.color}`}} >
-    <ToDoForm el={el} ind={ind} handleTaskSubmit={handleTaskSubmit}/>
+    <ToDoForm el={el} ind={ind} handleTaskSubmit={handleTaskSubmit} handleDeleteFromList={handleDeleteFromList}/>
   </div>
   </>
   );

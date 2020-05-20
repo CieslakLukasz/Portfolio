@@ -6,6 +6,8 @@ import ToDoAdd from "./ToDoAdd";
 import { useEffect } from "react";
 
 export default function ToDo() {
+  // const [dontTaskList, setDoneTaskList]=useState([]);
+  // const [failTaskList,setFailTaskList]=useState([]);
   const [taskList, setTaskList] = useState([
     {
       id: `12345`,
@@ -24,11 +26,12 @@ export default function ToDo() {
       date: "2020-05-24",
       time: "18:20",
       description:
-        "guzik delete  + aktualnosc tasku -> done/fail + stylowanie inputow ? ",
+        "aktualnosc tasku -> done/fail + paginacja zamiast ograniczenia do 12 ;) ",
       color: "f7918a",
       rotate: "-10",
     },
   ]);
+  // const [toMap, setToMap]=useState(taskList)
   const [task, setTask] = useState({
     id: uuid(),
     edit: true,
@@ -64,9 +67,14 @@ export default function ToDo() {
       })
     );
   };
+
   useEffect(() => {
     setTaskList((prev) => prev.map((el) => ({ ...el, edit: false })));
   }, []);
+
+  const handleDeleteFromList = (oneTask) =>{
+    setTaskList(prev=> prev.filter((el) => {return el.id !== oneTask.id}));
+  }
 
   return (
     <div className="toDoMain">
@@ -77,6 +85,7 @@ export default function ToDo() {
             el={el}
             ind={ind}
             handleTaskSubmit={handleTaskSubmit}
+            handleDeleteFromList={handleDeleteFromList}
           />
         ))}
       </div>

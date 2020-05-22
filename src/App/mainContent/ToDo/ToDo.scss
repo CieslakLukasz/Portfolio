@@ -4,6 +4,19 @@
   display: flex;
   position: relative;
 }
+.addTaskButton {
+  width: 100%;
+  height: fit-content;
+  padding: 1vw;
+  color: var(--fonts-color);
+  background-color: var(--main-color);
+
+}
+.addTaskButton:hover {
+
+  background-color: var(--hover-color);
+}
+
 .toDoForm {
   background-color: var(--hover-color);
   width: calc(30% - 4vw);
@@ -17,18 +30,7 @@
   position: absolute;
   right: 0;
   top: 0;
-  .addTaskButton {
-    width: 100%;
-    height: fit-content;
-    padding: 1vw;
-    color: var(--fonts-color);
-    background-color: var(--main-color);
 
-  }
-  .addTaskButton:hover {
-
-    background-color: var(--hover-color);
-  }
 }
 
 .toDoCards {
@@ -131,7 +133,7 @@ input:focus, select:focus, textarea:focus {
 
 }
 select {
-  padding: 0 5px;;
+  padding: 0 5px;
   border-width: 2px;
   border-style: outset;
   border-color: buttonface;
@@ -252,6 +254,7 @@ input[type=submit] {
         align-items: center;
       }
   input, select, textarea {
+
      font-size: 4vw;
   }
 
@@ -263,13 +266,24 @@ input[type=submit] {
     border-image: initial;
     cursor: pointer;
   }
+  .F4F48EClass:focus {
+    background-color:#F4F48E;
+  
+  }
+  .B8DEB8Class:focus {
+    background-color: #B8DEB8;
+  
+  }
+  .f7918aClass:focus {
+    background-color: #f7918a;
+  }
 
   input[type=text] {
     font-size: 5vw;
   }
   textarea{
     width: 100%;
-    height: calc(100% - 32vw);
+    height: calc(100% - 34vw);
   }
   input[type=submit] {
     border-width: 2px;

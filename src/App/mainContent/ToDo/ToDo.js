@@ -59,8 +59,7 @@ export default function ToDo() {
   };
 
   const handleTaskSubmit = (oneTask, onOff) => {
-
-    setTaskList((prev) =>
+     setTaskList((prev) =>
       prev.map((el) => {
         if (el.id !== oneTask.id) return el;
         return { ...oneTask, edit: onOff };
@@ -68,12 +67,14 @@ export default function ToDo() {
     );
   };
 
+
   useEffect(() => {
     setTaskList((prev) => prev.map((el) => ({ ...el, edit: false })));
   }, []);
 
+
   const handleDeleteFromList = (oneTask) =>{
-    setTaskList(prev=> prev.filter((el) => {return el.id !== oneTask.id}));
+    setTaskList(prev=> prev.filter((el) => {return el.id !== oneTask.id}))
   }
 
   return (

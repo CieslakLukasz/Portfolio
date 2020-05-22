@@ -40,18 +40,18 @@ export default function ToDoForm({el, ind,  handleTaskSubmit, handleDeleteFromLi
         type="text"
         name="title"
         value={oneTask.title}
-        placeholder="Tytuł zadania"
+        placeholder="Task name"
         onChange={handleChangeOne}
       ></input></h1></div>
       <textarea
         name="description"
         value={oneTask.description}
-        placeholder="Twoje zadanie"
+        placeholder="Task description"
         onChange={handleChangeOne}
       ></textarea>
       <div className='dateAndTime'>
           <label>
-            Termin:{" "}
+            Date:{" "}
             <input
               type="date"
               name="date"
@@ -60,7 +60,7 @@ export default function ToDoForm({el, ind,  handleTaskSubmit, handleDeleteFromLi
             ></input>
           </label>
           <label>
-            Godzina:{" "}
+            Time:{" "}
             <input
               type="time"
               name="time"
@@ -70,7 +70,7 @@ export default function ToDoForm({el, ind,  handleTaskSubmit, handleDeleteFromLi
           </label>
           </div>
           <div className='dateAndTime'>
-          <label>Priorytet: &nbsp;
+          <label>Priority: &nbsp;
             <select onChange={handleChangeOne} name="color" value={oneTask.color} className={`${oneTask.color}Class`}>
               <option value="F4F48E">Normal</option>
               <option value="B8DEB8">No pressure</option>

@@ -227,9 +227,9 @@ const handleBackClick = (e) =>{
 
   return (
     <div className="memory_main">
-    {showBacks ? <Backs handleBackClick={handleBackClick}/> : <div className='backImgDiv'><img className="backImgFirstChoice" src={backMenuSrc} name={backMenuSrc}  onClick={handleBackClick}/><span className='backImgTooltip'>Zmień obrazek</span></div>}
+    {showBacks ? <Backs handleBackClick={handleBackClick}/> : <div className='backImgDiv'><img className="backImgFirstChoice" src={backMenuSrc} name={backMenuSrc}  onClick={handleBackClick}/><span className='backImgTooltip'>Change image</span></div>}
      <div className="memory_game" >
-      {shuffle==='shuffling'? <p className='shuffleInfo'>Poczekaj na przetasowanie obrazków</p> : (shuffle==='shuffled'? <p className='shuffleInfo'>Zapamietaj obrazki!</p> :null)}
+      {shuffle==='shuffling'? <p className='shuffleInfo'>Wait for shuffle...</p> : (shuffle==='shuffled'? <p className='shuffleInfo'>Try to remember!</p> :null)}
         <table style={starting? stopTable : startTable}>
           {makeRows(rows, cols, tab).map((el, ind) => (
             <tr
@@ -243,17 +243,17 @@ const handleBackClick = (e) =>{
       <div className="memory_score" >
       <div>
         <h1>Memory:</h1>
-        <label>Ilość par:
+        <label>Pairs:
         <input
-          onChange={(e) => setPairs(e.target.value > 0 ? e.target.value : 0)}
+          onChange={(e) => setPairs(e.target.value > 0 ? e.target.value : '')}
           type="number"
 
           value={pairs}
         /></label>
-        {pairs>21 ? <h2 className='cant'>Można max 21 par :(</h2> : <button className="btn" onClick={handleClick}>
+        {pairs !=='' ? (pairs>21 ? <h2 className='cant'>Max 21 pairs :(</h2> : <button className="btn" onClick={handleClick}>
           Start
-        </button>}
-        <h2> {next ? "Aby zagrać kliknij start" : <br></br>}</h2>
+        </button>): <h2 className='cant'>Choose some pairs :(</h2>}
+        <h2> {next ? "Click 'start' to play" : <br></br>}</h2>
         </div>
         <CounterWatch
           watch={watch}

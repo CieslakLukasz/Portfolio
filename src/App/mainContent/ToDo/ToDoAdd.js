@@ -5,7 +5,7 @@ export default function ToDoForm({handleAddTask}) {
 
     return (
         <button className='addTaskButton' onClick={handleAddTask}>
-        Dodaj nowe zadanie
+        Add new task
         </button>
 
 

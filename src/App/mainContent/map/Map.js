@@ -1,8 +1,8 @@
-import React from "react";
+import React from "./node_modules/react";
 import "./Map.scss";
-import * as am4core from "@amcharts/amcharts4/core";
-import * as am4maps from "@amcharts/amcharts4/maps";
-import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
+import * as am4core from "./node_modules/@amcharts/amcharts4/core";
+import * as am4maps from "./node_modules/@amcharts/amcharts4/maps";
+import am4geodata_worldLow from "./node_modules/@amcharts/amcharts4-geodata/worldLow";
 
 
 export default function Map() {

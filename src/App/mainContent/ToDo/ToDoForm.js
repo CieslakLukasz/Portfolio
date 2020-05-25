@@ -8,8 +8,7 @@ export default function ToDoForm({el, ind,  handleTaskSubmit, handleDeleteFromLi
 
   const handleChangeOne = (e) => {
           setOneTask({...oneTask, [e.target.name]:e.target.value})
-
-  }
+  } 
 
   useEffect(() => {
     if(oneTask.edit===true){

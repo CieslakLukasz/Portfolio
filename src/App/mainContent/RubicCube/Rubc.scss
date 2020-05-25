@@ -7,41 +7,99 @@
     perspective: 1500px;
     button {
         position: absolute;
-        top:0;
+        top:40px;
     }
 }
 
+.left-right-nav {
+    position: absolute;
+    top: 90px;
+    z-index: 500;
+}
+.up-down-nav {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+    left: 20px;
+    top:48%;
+}
 .rubic-cube {
+    position: absolute;
+    top: 40%;
+    left:45%;
     width: 200px;
     height: 200px;
     transform-style: preserve-3d;
     backface-visibility: hidden;
-
+    .XZ {
+        position: absolute;
+        top:0;
+    }
+    .XY { position: absolute;
+    top: 100px;
+}
+.YZ {
+    position: absolute;
+    left:0px;
+    top:100px;
+}
+    .full {
+        width: 200px;
+        height: 200px;
+    }
+    .partX {
+        width: 200px;
+        height: 66.66px;
+    }
     div.face {
         position: absolute;
         top: 0 ;
         left: 0;
         background-size: cover;
-        width: 200px;
-        height: 200px;
+
     div {
-        width: calc(33% - 4px);
-        height: calc(33% - 4px);
+        width: 62px;
+        height: 62px;
         border-radius: 7px;
         border: 2px solid black;
+        position: relative;
+        .movedown {
+            position: absolute;
+            top:0 ;
+            left: calc(50% - 6px);
+        }
+        .moveright{
+            position: absolute;
+            top:calc(50% - 6px);
+            right:0;
+        }
+        .moveleft{
+            position: absolute;
+            top:calc(50% - 6px);
+            left:0;
+        }
+        .moveup{
+            position: absolute;
+            bottom:0%;
+            left:calc(50% - 6px);
+        }
     }
     }
 
     div {
         display: flex;
+        align-items: center;
+        justify-content: center;
         flex-wrap:wrap;
         background-color: black;
+
     }
 }
 
 div.top {
-    transform: translateX(0) translateY(-50%) rotateX(90deg);
+    transform: rotateX(90deg) translateZ(0px);
 }
+
 
 div.front {
     transform: translateX(0%) translateY(0%) translateZ(100px) rotateX(0deg);
@@ -53,11 +111,11 @@ div.back {
         transform: translateX(0%) translateY(0%) translateZ(-100px) rotateX(0deg);
 }
 div.left {
-    transform: translateX(-50%) translateY(0%) translateZ(0) rotateY(-90deg);
+    transform: translateX(0%) translateY(0%) translateZ(0) rotateX(-90deg);
 }
 
 div.bottom {
-    transform: translateX(0%) translateY(50%) translateZ(0) rotateX(-90deg);
+    transform: translateX(0%) translateY(50%) translateZ(0) rotateZ(-90deg);
 }
 
 
@@ -70,12 +128,21 @@ div.bottom {
 .rubic-cube {
     width: 100px;
     height: 100px;
+
+    div.face {
+        width: 100px;
+        height: 100px;
+        div {
+            width: calc(33% - 2px);
+            height: calc(33% - 2px);
+            border-radius: 7px;
+            border: 1px solid black;
+        }
+    }
+
 }
 
-div.face {
-    width: 100px;
-    height: 100px;
-}
+
 div.front {
     transform: translateZ(50px);
 }

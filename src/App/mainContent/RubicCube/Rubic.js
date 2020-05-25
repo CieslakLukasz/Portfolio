@@ -1,13 +1,24 @@
 import React from "react";
 import "./Rubc.scss";
-import Box from "./Box";
 import { useState } from "react";
 import { useEffect } from "react";
 import RubicXZ from "./RubicXZ";
 import RubicXY from "./RubicXY";
 import RubicYZ from "./RubicYZ";
+import Controlers from "./Controlers";
 
 let black = ["black", "black", "black", "black", "black", "black"];
+let transparent = [
+  "transparent",
+  "transparent",
+  "transparent",
+  "transparent",
+  "transparent",
+  "transparent",
+  "transparent",
+  "transparent",
+  "transparent",
+];
 let topSide = ["red", "red", "red", "red", "red", "red", "red", "red", "red"];
 let frontSide = [
   "yellow",
@@ -91,6 +102,14 @@ export default function Rubic() {
     left: [...leftSide, ...black, ...black, ...black],
     bottom: [...bottomSide],
   });
+  const [rubicControlers] = useState({
+    top: [...transparent],
+    front: [...transparent],
+    right: [...transparent, ...transparent, ...transparent],
+    back: [...transparent],
+    left: [...transparent, ...transparent, ...transparent],
+    bottom: [...transparent],
+  });
   let [oneCubeSize, setOneCubeSize] = useState(66);
   const [animation, setAnimation] = useState(false);
   const [rubicStyles, setRubicStyles] = useState({
@@ -129,7 +148,7 @@ export default function Rubic() {
   let turnRight = () => {
     setAnimation(false);
     let intervalId = setInterval(() => {
-      setRubicStyles((prev) => ({ ...prev, Y: `${prev.Y - -3}` }));
+      setRubicStyles((prev) => ({ ...prev, Y: `${prev.Y - -8}` }));
     }, 100);
     setIntervalOne(intervalId);
   };
@@ -150,8 +169,100 @@ export default function Rubic() {
   let stop = () => {
     clearInterval(intervalOne);
   };
+  const [XZstyle, setXZstyle] = useState({
+    left: 0,
+    mid: 0,
+    right: 0,
+  });
+  const [XYstyle, setXYstyle] = useState({
+    left: 0,
+    mid: 0,
+    right: 0,
+  });
+  const [YZstyle, setYZstyle] = useState({
+    left: 0,
+    mid: 0,
+    right: 0,
+  });
 
-  
+  let leftXZ = (ind) => {
+    console.log(ind);
+    if (ind === 0 || ind === 1 || ind === 2) {
+      setXZstyle((prev) => ({...prev, left: prev.left + 90}));
+    } else if (ind === 3 || ind === 4 || ind === 5) {
+      setXZstyle((prev) => ({...prev, mid: prev.mid + 90}));
+    } else {
+      setXZstyle((prev) => ({...prev, right: prev.right + 90}));
+    }
+  };
+  let rightXZ = (ind) => {
+    console.log(ind);
+    if (ind === 0 || ind === 1 || ind === 2) {
+      setXZstyle((prev) => ({...prev, left: prev.left - 90}));
+    } else if (ind === 3 || ind === 4 || ind === 5) {
+      setXZstyle((prev) => ({...prev, mid: prev.mid - 90}));
+    } else {
+      setXZstyle((prev) => ({...prev, right: prev.right - 90}));
+    }
+  };
+  let leftXY = (ind,site) => {
+    if(site==='top'){
+    if (ind === 0 || ind === 1 || ind === 2) {
+      setXYstyle((prev) => ({...prev, right: prev.right - 90}));
+    } else if (ind === 3 || ind === 4 || ind === 5) {
+      setXYstyle((prev) => ({...prev, mid: prev.mid - 90}));
+    } else {
+      setXYstyle((prev) => ({...prev, left: prev.left - 90}));
+    }}else{
+      if (ind === 0 || ind === 3 || ind === 6) {
+        setXYstyle((prev) => ({...prev, right: prev.right - 90}));
+      } else if (ind === 4 || ind === 1 || ind === 7) {
+        setXYstyle((prev) => ({...prev, mid: prev.mid - 90}));
+      } else {
+        setXYstyle((prev) => ({...prev, left: prev.left - 90}));
+      }
+    }
+  };
+  let rightXY = (ind, site) => {
+    if(site==='top'){
+    if (ind === 0 || ind === 1 || ind === 2) {
+      setXYstyle((prev) => ({...prev, right: prev.right + 90}));
+    } else if (ind === 3 || ind === 4 || ind === 5) {
+      setXYstyle((prev) => ({...prev, mid: prev.mid + 90}));
+    } else {
+      setXYstyle((prev) => ({...prev, left: prev.left + 90}));
+    }}else{
+      if (ind === 0 || ind === 3 || ind === 6) {
+        setXYstyle((prev) => ({...prev, right: prev.right + 90}));
+      } else if (ind === 4 || ind === 1 || ind === 7) {
+        setXYstyle((prev) => ({...prev, mid: prev.mid + 90}));
+      } else {
+        setXYstyle((prev) => ({...prev, left: prev.left + 90}));
+      }
+    }
+  };
+  let leftYZ = (ind) => {
+    console.log(ind);
+    if (ind === 0 || ind === 3 || ind === 6) {
+      setYZstyle((prev) => ({...prev, left: prev.left - 90}));
+    } else if (ind === 1 || ind === 4 || ind === 7) {
+      setYZstyle((prev) => ({...prev, mid: prev.mid - 90}));
+    } else {
+      setYZstyle((prev) => ({...prev, right: prev.right - 90}));
+    }
+  };
+  let rightYZ = (ind) => {
+    console.log(ind);
+    if (ind === 0 || ind === 3 || ind === 6) {
+      setYZstyle((prev) => ({...prev, left: prev.left + 90}));
+    } else if (ind === 1 || ind === 4 || ind === 7) {
+      setYZstyle((prev) => ({...prev, mid: prev.mid + 90}));
+    } else {
+      setYZstyle((prev) => ({...prev, right: prev.right + 90}));
+    }
+  };
+
+  const control = {leftXZ, rightXZ, leftXY, rightXY, leftYZ, rightYZ};
 
   return (
     <div className="rubic-container">
@@ -188,13 +299,19 @@ export default function Rubic() {
           transform: `rotateX(${rubicStyles.X}deg) rotateY(${rubicStyles.Y}deg)`,
         }}
       >
-        {numberOfRows.map((el) => (
-          <>
-            <RubicYZ el={el} rubicByYZ={rubicByYZ} oneCubeSize={oneCubeSize} />
-            <RubicXZ el={el} rubicByXZ={rubicByXZ} oneCubeSize={oneCubeSize} />
-            <RubicXY el={el} rubicByXY={rubicByXY} oneCubeSize={oneCubeSize} />
-          </>
-        ))}
+{numberOfRows.map((el) => (
+  <>
+    <RubicYZ el={el} rubicByYZ={rubicByYZ} oneCubeSize={oneCubeSize} YZstyle={YZstyle}/>
+    <RubicXZ el={el} rubicByXZ={rubicByXZ} oneCubeSize={oneCubeSize} XZstyle={XZstyle}/>
+    <RubicXY el={el} rubicByXY={rubicByXY} oneCubeSize={oneCubeSize} XYstyle={XYstyle}/>
+
+  </>
+))}
+        <Controlers
+              rubicByYZ={rubicControlers}
+              oneCubeSize={oneCubeSize}
+              control={control}
+            />
       </div>
     </div>
   );

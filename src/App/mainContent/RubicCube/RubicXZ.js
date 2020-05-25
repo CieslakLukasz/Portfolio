@@ -1,36 +1,21 @@
 import React, {useState} from 'react';
 import Arrow from './Arrow';
 
-export default function RubicXZ({el, rubicByXZ, oneCubeSize}) {
-const [XZstyle, setXZstyle] = useState(0);
-const [XYstyle, setXYstyle] = useState(0);
-const [YZstyle, setYZstyle] = useState(0);
-
-let leftXZ= () => {
-    setXZstyle(prev => prev - 90)
+export default function RubicXZ({el, rubicByXZ, oneCubeSize, XZstyle}) {
+  let rotate;
+  if(el === -1){
+    rotate = XZstyle.left;
+  }else if(el === 0){
+    rotate = XZstyle.mid;
+  }else{
+    rotate = XZstyle.right;
   }
-let rightXZ =()=> {
-  setXZstyle(prev=> prev + 90)
-}
-let leftXY = () => {
-  setXYstyle(prev => prev - 90)
-}
-let rightXY = () => {
-  setXYstyle(prev => prev + 90)
-}
-
-let leftYZ = () => {
-  setYZstyle(prev => prev - 90)
-}
-let rightYZ = () => {
-  setYZstyle(prev => prev + 90)
-}
 
 
     return (
         <div className='XZ'
         style={{
-            transform: `rotateX(90deg) rotateZ(${XZstyle}deg) translateY(-100px) translateX(-100px) translateZ(${
+            transform: `rotateX(90deg) rotateZ(${rotate}deg) translateY(-100px) translateX(-100px) translateZ(${
               (el+1) * -oneCubeSize
             }px)`,
             transition: `1s all`,
@@ -40,8 +25,7 @@ let rightYZ = () => {
       >
         <div className="face full">
           {rubicByXZ.top.slice(9*el +9, 9 * el + 18).map((color) => (
-            <Arrow color={color} l={leftXZ} r={rightXZ} u={leftXY} d={rightXY}/>
-            ))}
+            <div style={{ backgroundColor: color }}/>            ))}
         </div>
         <div
           className="face partX"
@@ -52,8 +36,7 @@ let rightYZ = () => {
           }}
         >
           {rubicByXZ.left.slice(3 * el +3 , 3 * el + 6).map((color) => (
-            <Arrow color={color} l={leftXZ} r={rightXZ} u={leftXY} d={rightXY}/>
-          ))}
+            <div style={{ backgroundColor: color }}/>            ))}
         </div>
         <div
           className="face partX"
@@ -64,8 +47,7 @@ let rightYZ = () => {
           }}
         >
           {rubicByXZ.right.slice(3 * el +3 , 3 * el + 6).map((color) => (
-            <Arrow color={color} l={leftXZ} r={rightXZ} u={leftXY} d={rightXY}/>
-            ))}
+            <div style={{ backgroundColor: color }}/>            ))}
         </div>
         <div
           className="face partX"
@@ -76,8 +58,7 @@ let rightYZ = () => {
           }}
         >
           {rubicByXZ.front.slice(3 * el +3 , 3 * el + 6).map((color) => (
-            <Arrow color={color} l={leftXZ} r={rightXZ} u={leftXY} d={rightXY}/>
-            ))}
+            <div style={{ backgroundColor: color }}/>            ))}
         </div>
         <div
           className="face partX"
@@ -88,8 +69,7 @@ let rightYZ = () => {
           }}
         >
           {rubicByXZ.back.slice(3 * el +3 , 3 * el + 6).map((color) => (
-            <Arrow color={color} l={leftXZ} r={rightXZ} u={leftXY} d={rightXY}/>
-            ))}
+            <div style={{ backgroundColor: color }}/>            ))}
         </div>
         <div
           className="face full"
@@ -98,7 +78,7 @@ let rightYZ = () => {
           }}
         >
           {rubicByXZ.bottom.slice(9 * el+9, 9 * el + 18).map((color) => (
-            <Arrow color={color} l={leftXZ} r={rightXZ} u={leftXY} d={rightXY}/>))}
+            <div style={{ backgroundColor: color }}/>            ))}
         </div>
       </div>
     )

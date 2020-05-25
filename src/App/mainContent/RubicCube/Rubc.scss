@@ -30,7 +30,6 @@
     width: 200px;
     height: 200px;
     transform-style: preserve-3d;
-    backface-visibility: hidden;
     .XZ {
         position: absolute;
         top:0;
@@ -63,36 +62,72 @@
         border-radius: 7px;
         border: 2px solid black;
         position: relative;
-        .movedown {
-            position: absolute;
-            top:0 ;
-            left: calc(50% - 6px);
-        }
-        .moveright{
-            position: absolute;
-            top:calc(50% - 6px);
-            right:0;
-        }
-        .moveleft{
-            position: absolute;
-            top:calc(50% - 6px);
-            left:0;
-        }
-        .moveup{
-            position: absolute;
-            bottom:0%;
-            left:calc(50% - 6px);
-        }
     }
     }
+    .control{
+        position: absolute;
+        left:0px;
+        top:100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-wrap:wrap;
+        background-color: transparent;
+        .full {
+            width: 204px;
+            height: 204px;
+        }
+        .partX {
+            width: 204px;
+            height: 68px;
+        }
+        div.face {
+            position: absolute;
+            top: 0 ;
+            left: 0;
+            background-size: cover;
 
+        div {
+
+            width: 62px;
+            height: 62px;
+            border-radius: 7px;
+            border: 2px solid transparent;
+            position: relative;
+            .movedown {
+                color: violet;
+                position: absolute;
+                top:0px ;
+                left: calc(50% - 6px);
+             }
+            .moveright{
+                color: lightblue;
+                position: absolute;
+                top:calc(50% - 8px);
+                right:0;
+
+            }
+            .moveleft{
+                position: absolute;
+                top:calc(50% - 8px);
+                left:0px;
+
+            }
+            .moveup{
+                position: absolute;
+                bottom:0;
+                left:calc(50% - 6px);
+
+            }
+        }
+        }
+    }
     div {
         display: flex;
         align-items: center;
         justify-content: center;
         flex-wrap:wrap;
-        background-color: black;
-
+        background-color: transparent;
     }
 }
 

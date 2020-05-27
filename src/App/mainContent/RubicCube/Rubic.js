@@ -157,7 +157,7 @@ export default function Rubic({winW}) {
   let turnLeft = () => {
     setAnimation(false);
     let intervalId = setInterval(() => {
-      setRubicStyles((prev) => ({ ...prev, Y: `${prev.Y - 3}` }));
+      setRubicStyles((prev) => ({ ...prev, Y: `${prev.Y - 8}` }));
     }, 100);
     setIntervalOne(intervalId);
   };
@@ -171,14 +171,14 @@ export default function Rubic({winW}) {
   let turnUp = () => {
     setAnimation(false);
     let intervalId = setInterval(() => {
-      setRubicStyles((prev) => ({ ...prev, X: `${prev.X - -3}` }));
+      setRubicStyles((prev) => ({ ...prev, X: `${prev.X - -8}` }));
     }, 100);
     setIntervalOne(intervalId);
   };
   let turnDown = () => {
     setAnimation(false);
     let intervalId = setInterval(() => {
-      setRubicStyles((prev) => ({ ...prev, X: `${prev.X - 3}` }));
+      setRubicStyles((prev) => ({ ...prev, X: `${prev.X - 8}` }));
     }, 100);
     setIntervalOne(intervalId);
   };

@@ -31,7 +31,7 @@ rightXY(ind,site)
     return (
         <div className='control'
         style={{
-          transform: `translateX(-${1.5*oneCubeSizeControl}px) translateY(-${1.5*oneCubeSizeControl}px) translateZ(${1.5*oneCubeSizeControl}px)`,
+          transform: `translateX(-${1.5*oneCubeSizeControl}px) translateY(-${1.5*oneCubeSizeControl+1}px) translateZ(${1.5*oneCubeSizeControl}px)`,
           transition: `1s all`,
           transformStyle: "preserve-3d",
           opacity: `1`

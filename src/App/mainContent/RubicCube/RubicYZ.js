@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Arrow from './Arrow';
 
-export default function RubicYZ({el, rubicByYZ, oneCubeSize, YZstyle}) {
+export default function RubicYZ({winW, el, rubicByYZ, oneCubeSize, YZstyle}) {
   let rotate;
   if(el === -1){
     rotate = YZstyle.left;
@@ -11,18 +11,28 @@ export default function RubicYZ({el, rubicByYZ, oneCubeSize, YZstyle}) {
     rotate = YZstyle.right;
   }
 
+  let style;
+  if(rotate === 0){
+style = {
+  transform: `rotateY(-90deg) rotateZ(${rotate}deg) translateX(-${1.5*oneCubeSize}px) translateY(-${1.5*oneCubeSize}px) translateZ(${
+    (el-0.5) * -oneCubeSize
+  }px)`,
 
+  transformStyle: "preserve-3d",
+  opacity: `1`
+}}else{
+  style = {
+    transform: `rotateY(-90deg) rotateZ(${rotate}deg) translateX(-${1.5*oneCubeSize}px) translateY(-${1.5*oneCubeSize}px) translateZ(${
+      (el-0.5) * -oneCubeSize
+    }px)`,
+    transition: `1s all`,
+    transformStyle: "preserve-3d",
+    opacity: `1`
+}}
 
     return (
         <div className='YZ'
-        style={{
-          transform: `rotateY(-90deg) rotateZ(${rotate}deg) translateX(-100px) translateY(-100px) translateZ(${
-            (el-0.5) * -oneCubeSize
-          }px)`,
-          transition: `1s all`,
-          transformStyle: "preserve-3d",
-          opacity: `1`
-      }}
+        style={style}
       >
         <div className="full face">
           {rubicByYZ.left.slice(9*el + 9, 9 * el + 18).map((color) => (

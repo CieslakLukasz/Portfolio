@@ -31,21 +31,21 @@ rightXY(ind,site)
     return (
         <div className='control'
         style={{
-          transform: `translateX(-102px) translateY(-102px) translateZ(${1.5*oneCubeSizeControl}px)`,
+          transform: `translateX(-${1.5*oneCubeSizeControl}px) translateY(-${1.5*oneCubeSizeControl}px) translateZ(${1.5*oneCubeSizeControl}px)`,
           transition: `1s all`,
           transformStyle: "preserve-3d",
           opacity: `1`
       }}
       >
         <div className="full face">
-        {rubicByYZ.left.slice(0, 9).map((color, ind) => (
+        {rubicByYZ.left.map((color, ind) => (
             <Arrow color={color} l={leftXZleft} r={rightXZright} u={rightYZright} d={leftYZleft} ind={ind}/>
             ))}
         </div>
         <div className="face full"
           style={{
             transform: `rotateX(90deg) translateZ(${
-                +1.5*oneCubeSizeControl}px) translateY(-100px)`,
+                +1.5*oneCubeSizeControl}px) translateY(-${1.5*oneCubeSize}px)`,
           }}
         >
         {rubicByYZ.back.map((color,ind) => (
@@ -91,7 +91,7 @@ rightXY(ind,site)
             transform: `rotateX(0deg) rotateY(0deg) translateZ(${-3*oneCubeSizeControl}px)`,
           }}
         >
-        {rubicByYZ.right.slice(0,9).map((color,ind) => (
+        {rubicByYZ.right.map((color,ind) => (
             <Arrow color={color} l={rightXZright} r={leftXZleft} u={leftYZleft} d={rightYZright} ind={ind}/>
           ))}
         </div>

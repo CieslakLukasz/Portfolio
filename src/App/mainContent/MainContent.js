@@ -17,7 +17,7 @@ export default function MainContent({mediasData, winW}) {
           <Route exact path="/" component={ToDo} />
           <Route path="/weather" component={Start} />
           <Route path="/memory" render={() =><Memory winW={winW}/>} />
-          <Route path="/rubiccube" component={Rubic} />
+          <Route path="/rubiccube" render={()=> <Rubic winW={winW} />} />
           <Route path="/about" render={() =><About mediasData={mediasData}/>} />
         </Switch>
       </HashRouter>

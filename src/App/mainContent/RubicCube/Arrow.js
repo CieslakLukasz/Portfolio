@@ -20,10 +20,11 @@ export default function arrow({color, l,r,u,d , ind, site}) {
       <div style={{ backgroundColor: color }}>
       {color !== 'black'? (
         <>
-      <span onClick={right} className='moveright'> &#11162;</span>
-      <span onClick={left} className='moveleft'> &#11160;</span>
-      <span onClick={up} className='moveup'> &#11163;</span>
-      <span onClick={down} className='movedown'> &#11161;</span>
+        <img onClick={right} className='moveright' src='/assets/images/arrow.svg' alt=''/>
+        <img onClick={left} className='moveleft' src='/assets/images/arrow.svg' alt=''/>
+        <img onClick={up} className='moveup' src='/assets/images/arrow.svg' alt=''/>
+        <img onClick={down} className='movedown' src='/assets/images/arrow.svg' alt=''/>
+
       </>)
       : null}
       </div>

@@ -1,95 +1,14 @@
-import React from "react";
+import React, { useState,  useEffect } from "react";
 import "./Rubc.scss";
-import { useState } from "react";
-import { useEffect } from "react";
 import RubicXZ from "./RubicXZ";
 import RubicXY from "./RubicXY";
 import RubicYZ from "./RubicYZ";
 import Controlers from "./Controlers";
-
-// colors of each side + transparent / black pattern
-let black = [
-  "black",
-  "black",
-  "black",
-  "black",
-  "black",
-  "black",
-  "black",
-  "black",
-  "black",
-];
-let transparent = [
-  "transparent",
-  "transparent",
-  "transparent",
-  "transparent",
-  "transparent",
-  "transparent",
-  "transparent",
-  "transparent",
-  "transparent",
-];
-let topSide = ["red", "red", "red", "red", "red", "red", "red", "red", "red"];
-let frontSide = [
-  "yellow",
-  "yellow",
-  "yellow",
-  "yellow",
-  "yellow",
-  "yellow",
-  "yellow",
-  "yellow",
-  "yellow",
-];
-let rightSide = [
-  "green",
-  "green",
-  "green",
-  "green",
-  "green",
-  "green",
-  "green",
-  "green",
-  "green",
-];
-let backSide = [
-  "white",
-  "white",
-  "white",
-  "white",
-  "white",
-  "white",
-  "white",
-  "white",
-  "white",
-];
-let leftSide = [
-  "blue",
-  "blue",
-  "blue",
-  "blue",
-  "blue",
-  "blue",
-  "blue",
-  "blue",
-  "blue",
-];
-let bottomSide = [
-  "orange",
-  "orange",
-  "orange",
-  "orange",
-  "orange",
-  "orange",
-  "orange",
-  "orange",
-  "orange",
-];
+import {black, transparent,topSide, frontSide,rightSide,leftSide,backSide,bottomSide} from './SidesColors'
 
 export default function Rubic({winW}) {
   // we got 3 rows in X 3 in Y and 3 in Z so w need row patern:
-  const [numberOfRows] = useState([-1, 0, 1]);
+  const numberOfRows = [-1, 0, 1];
   // in each direction we need pattern of our colors to display
   const [rubicByXZ, setRubicByXZ] = useState({
     top: [...topSide, ...black, ...black],
@@ -123,7 +42,7 @@ export default function Rubic({winW}) {
     left: [...transparent],
     bottom: [...transparent],
   });
-  //oneCubeSize jsut gonna change on resize
+  //size of single One Cube just gonna change on resize so 66 for desktop 33 for mobile
   let [oneCubeSize, setOneCubeSize] = useState(winW < 800? 33 : 66);
 
   //some stuff to change our view point
@@ -203,7 +122,8 @@ export default function Rubic({winW}) {
     mid: 0,
     right: 0,
   });
-// setting things visable and not depends of arrow we click
+
+// setting things visable/unvisable depends of arrow we click
 const [controlersActive, toggleControlersActive]=useState(true);
 const [rubicActive, setRubicActive]=useState({
   XZ:true,
@@ -211,6 +131,9 @@ const [rubicActive, setRubicActive]=useState({
   YZ: false
 })
 
+//changing other cubes to same pattern like one we move.
+
+  //paterns of change
 const YZFromXY = () => {
   let t = rubicByXY.top;
   let f = rubicByXY.front;
@@ -309,6 +232,7 @@ const YZFromXZ = () => {
 }
 
 
+  //change 2nd cube after we move some side and show controlers again
   useEffect(() => {
     if(controlersActive){
       return;
@@ -320,11 +244,10 @@ const YZFromXZ = () => {
     if(rubicActive.XY){
       XZFromYZ()}
             setTimeout(() => {
-
             toggleControlersActive(true)
           }, 1150)
   }, [XZstyle, XYstyle, YZstyle])
-
+  // change rotations to start point after that swap pattern on cube we just moved (3rd one) to same as rest, and showing anther one visable same time
   useEffect(() => {
   if(!controlersActive){ return}
 setXZstyle({
@@ -361,7 +284,11 @@ if(rubicActive.XY){
   }
   }, [controlersActive])
 
-
+// all moves of cube so 2x XZ 2x YZ 2x YZ (left / right each)
+// unshowing controler arrows and setting pattern of 1st cube by this change
+//so ie. we move XZ -> we change pattern of XY (1st one)here
+//then above we change YZ (2nd) in first useEffect and in 2nd useEffect we set rotation to 0 again
+// then we change our XZ (3rd one, we just moved) pattern so all 3 paterns gona be same and ready for next move
   let leftXZ = (ind) => {
     toggleControlersActive(false);
     setRubicActive({ XZ:true,
@@ -444,8 +371,6 @@ top: [...prev.top],
       }, 100);
   };
   let leftXY = (ind, site) => {
-    console.log('zmiana');
-    
     toggleControlersActive(false);
     setRubicActive({ XZ:false,
       XY:true,
@@ -599,7 +524,6 @@ top: [...prev.top],
       XY:false,
       YZ: true});
       setTimeout(() => {
-
          if (ind === 0 || ind === 3 || ind === 6) {
           setRubicByXZ(prev => ({...prev,
             top: [prev.front[0],prev.top[1],prev.top[2],prev.front[3],prev.top[4],prev.top[5],prev.front[6],prev.top[7],prev.top[8]],
@@ -674,6 +598,7 @@ top: [...prev.top],
       }, 100);
   };
 
+  // props we gonna pass to controlers
   const control = { leftXZ, rightXZ, leftXY, rightXY, leftYZ, rightYZ };
 
   return (
@@ -686,25 +611,17 @@ top: [...prev.top],
         Move around!
       </button>
           <div className="up-down-nav">
-          <span onMouseEnter={turnUp} onMouseOut={stop}>
-          {" "}
-          &#11161;<br/>Up
-        </span>
+          <div>   <img onMouseEnter={turnUp} onMouseOut={stop} className='moveup' src='/assets/images/arrow.svg' alt=''/>
+          Up</div>
       <div className="left-right-nav">
-        <span onMouseEnter={turnLeft} onMouseOut={stop}>
-          {" "}
-          &#11160;Left
-        </span>{" "}
-        <span onMouseEnter={turnRight} onMouseOut={stop}>
-          {" "}
-         Right &#11162;
-        </span>
+      <img onMouseEnter={turnLeft} onMouseOut={stop} className='moveleft' src='/assets/images/arrow.svg' alt=''/>
+      Left Right
+       <img onMouseEnter={turnRight} onMouseOut={stop} className='moveright' src='/assets/images/arrow.svg' alt=''/>
       </div>
-       {" "}
-        <span onMouseEnter={turnDown} onMouseOut={stop}>
-          {" "}
-          Down <br/> &#11163;
-        </span>
+      <div>  Down 
+      <img onMouseEnter={turnDown} onMouseOut={stop} className='movedown' src='/assets/images/arrow.svg' alt=''/>
+</div>
+        
       </div>
     </div>
       <div
@@ -717,7 +634,6 @@ top: [...prev.top],
           <>
           {rubicActive.XZ &&
             <RubicXZ
-            winW={winW}
               el={el}
               rubicByXZ={rubicByXZ}
               oneCubeSize={oneCubeSize}
@@ -725,7 +641,6 @@ top: [...prev.top],
             />}
             {rubicActive.XY &&
             <RubicXY
-            winW={winW}
               el={el}
               rubicByXY={rubicByXY}
               oneCubeSize={oneCubeSize}
@@ -733,7 +648,6 @@ top: [...prev.top],
             />}
             {rubicActive.YZ &&
           <RubicYZ
-          winW={winW}
           el={el}
           rubicByYZ={rubicByYZ}
           oneCubeSize={oneCubeSize}

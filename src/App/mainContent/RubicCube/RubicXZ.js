@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Arrow from './Arrow';
 
-export default function RubicXZ({winW,el, rubicByXZ, oneCubeSize, XZstyle}) {
+export default function RubicXZ({el, rubicByXZ, oneCubeSize, XZstyle}) {
   let rotate;
   if(el === -1){
     rotate = XZstyle.left;

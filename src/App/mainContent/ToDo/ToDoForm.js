@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import "./ToDo.scss";
 
+
 export default function ToDoForm({el, ind,  handleTaskSubmit, handleDeleteFromList}) {
-  const [oneTask, setOneTask] = useState(el);
+  const [oneTask, setOneTask] = useState('');
   const [err, setErr]=useState('');
 
 
   const handleChangeOne = (e) => {
           setOneTask({...oneTask, [e.target.name]:e.target.value})
-  } 
+  }
+
 
   useEffect(() => {
-    if(oneTask.edit===true){
+    setOneTask(el)
+  }, [el])
+
+  useEffect(() => {
+    if(el.edit===true){
     handleTaskSubmit(oneTask, true)}
 
   }, [oneTask.color])
@@ -23,6 +29,8 @@ export default function ToDoForm({el, ind,  handleTaskSubmit, handleDeleteFromLi
       return;
     }
     setErr("");
+    console.log('one task false');
+    
     handleTaskSubmit(oneTask, false);
   }
 

@@ -12,7 +12,7 @@ export default function Header({winW}) {
     <div className="header">
       <nav>
         <ul className='navi_list'>
-        <li className='navi_list_el'><NavLink exact to="/"  activeStyle={activeStyle} >To Do</NavLink></li>
+        <li className='navi_list_el'><NavLink exact to="/"  activeStyle={activeStyle} >To Do List</NavLink></li>
           <li className='navi_list_el'><NavLink to="/weather" activeStyle={activeStyle} >Weather</NavLink></li>
           <li className='navi_list_el'><NavLink to="/memory"  activeStyle={activeStyle}>Memory</NavLink></li>
           <li className='navi_list_el'><NavLink to="/rubiccube" activeStyle={activeStyle} >Rubic Cube</NavLink></li>

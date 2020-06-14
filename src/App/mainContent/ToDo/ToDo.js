@@ -4,7 +4,7 @@ import Task from "./Task";
 import uuid from "react-uuid";
 import ToDoAdd from "./ToDoAdd";
 import { useEffect } from "react";
-import firebase from "../../firebase";
+import Firebase from "../../firebase";
 
 // {
 //   id: `12345`,
@@ -16,25 +16,24 @@ import firebase from "../../firebase";
 //   color: "B8DEB8",
 //   rotate: "-5",
 // },
-// {
-//   id: `123456`,
-//   edit: true,
-//   title: "ToDoList",
-//   date: "2020-06-08",
-//   time: "18:20",
-//   description:
-//     " fetch/post jsonserver ,aktualnosc tasku -> done/fail + paginacja zamiast ograniczenia do 12 ;) ",
-//   color: "f7918a",
-//   rotate: "-10",
-// },
+const compare = (a,b) =>{
+  const colorA = a.color;
+  const colorB = b.color;
+  let comparison = 0;
+  if(colorA>colorB){
+    comparison=1;
+  }else if(colorA<colorB){
+    comparison=-1;
+  }
+  return -comparison;
+}
+
 
 export default function ToDo() {
-  // const [dontTaskList, setDoneTaskList]=useState([]);
-  // const [failTaskList,setFailTaskList]=useState([]);
   const [taskList, setTaskList] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [pages, setPages] = useState([])
-  // const [toMap, setToMap]=useState(taskList)
+  const [pages, setPages] = useState([]);
+  const [toMap, setToMap] = useState("toDo");
   const [task, setTask] = useState({
     id: uuid(),
     edit: true,
@@ -46,15 +45,14 @@ export default function ToDo() {
     rotate: Math.floor(Math.random() * 21) - 10,
   });
 
-  const handleAddTask = () => {
-    if(taskList.length===pages.length*12){
-      setCurrentPage(pages.length+1)
-    }else{
-    setCurrentPage(pages.length)}
-      firebase
-      .firestore()
-      .collection("toDo")
-      .add({ ...task, edit: true });
+
+   const handleAddTask = () => {
+    if (taskList.length === pages.length * 12) {
+      setCurrentPage(pages.length + 1);
+    } else {
+      setCurrentPage(pages.length);
+    }
+    Firebase.add(task, true, "toDo");
     setTaskList((prev) => [...prev, task]);
     setTask({
       id: uuid(),
@@ -68,101 +66,149 @@ export default function ToDo() {
     });
   };
 
+
   const handleTaskSubmit = (oneTask, onOff) => {
-    console.log(taskList);
+    if(onOff){
     setTaskList((prev) =>
       prev.map((el) => {
         if (el.id !== oneTask.id) return el;
         return { ...oneTask, edit: onOff };
       })
-    );
-    firebase
-      .firestore()
-      .collection("toDo")
-      .get()
-      .then((toDos) => {
-        toDos.docs.forEach((elem) => {
-          if (elem.data().id === oneTask.id) {
-            firebase
-              .firestore()
-              .collection("toDo")
-              .doc(elem.id)
-              .update({ ...oneTask, edit: onOff });
-          }
-        });
-      });
+    )}else{
+      setTaskList((prev) =>
+      prev.map((el) => {
+        if (el.id !== oneTask.id) return el;
+        return { ...oneTask, edit: onOff };
+      }).sort(compare));
+    }
+    Firebase.update(oneTask, onOff, toMap);
 
   };
 
   useEffect(() => {
-    const unsub = firebase
-      .firestore()
-      .collection("toDo")
-      .orderBy("date", "asc")
+    const fullDate = new Date();
+    const date = fullDate.toLocaleDateString();
+    let time = fullDate.toLocaleTimeString();
+
+    const unsub = Firebase.db
+      .collection(toMap)
+      .orderBy("color", "desc")
       .get()
       .then((toDos) => {
         const loadedToDos = toDos.docs.map((toDo) => toDo.data());
-        setTaskList(loadedToDos);
+        let toShow = [];
+        if(toMap==='toDo'){
+          loadedToDos.forEach(el => {
+            if(date>= new Date(el.date).toLocaleDateString() && time>el.time){
+              Firebase.delete(el, toMap);
+              Firebase.add(el, false, 'failed')
+            }else{
+              toShow.push(el)
+            }
+          });
+        }else{
+          toShow = loadedToDos;
+        }
+        setTaskList(toShow);
+        setCurrentPage(1);
       });
     return () => unsub;
-  }, []);
+  }, [toMap]);
 
+  const handleAddToDoneList = (oneTask) => {
+    setTaskList((prev) =>
+      prev.filter((el) => {
+        return el.id !== oneTask.id;
+      })
+    );
+    Firebase.delete(oneTask, toMap);
+    Firebase.add(oneTask, false, "done");
+  };
+  
   const handleDeleteFromList = (oneTask) => {
     setTaskList((prev) =>
       prev.filter((el) => {
         return el.id !== oneTask.id;
       })
     );
-    firebase
-      .firestore()
-      .collection("toDo")
-      .get()
-      .then((toDos) => {
-        toDos.docs.forEach((elem) => {
-          if (elem.data().id === oneTask.id) {
-            firebase
-              .firestore()
-              .collection("toDo")
-              .doc(elem.id)
-              .delete()
-          }
-        });
-      });
-      if((taskList.length===(currentPage-1)*12+1) && currentPage>1){
-        setCurrentPage(prev=>prev-1)
-      }
+    Firebase.delete(oneTask, `${toMap}`);
+    if (taskList.length === (currentPage - 1) * 12 + 1 && currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
   };
 
   useEffect(() => {
-    const numberOfPages = Math.ceil(taskList.length/12);
-    const arr=[];
-    for(let i=1; i<numberOfPages+1; i++){
-      arr.push(i)
+    const numberOfPages = Math.ceil(taskList.length / 12);
+    const arr = [];
+    for (let i = 1; i < numberOfPages + 1; i++) {
+      arr.push(i);
     }
-    setPages(arr)
-  }, [taskList])
+    setPages(arr);
+  }, [taskList]);
 
-
+  const handleListChange = (e) => {
+    setToMap(e.target.name);
+  };
 
   return (
     <div className="toDoMain">
       <div className="toDoCards">
-        {taskList.slice((currentPage-1)*12,currentPage*12).map((el, ind) => (
-          <Task
-            key={ind}
-            el={el}
-            ind={ind+(currentPage-1)*12}
-            handleTaskSubmit={handleTaskSubmit}
-            handleDeleteFromList={handleDeleteFromList}
-          />
-        ))}
-        {taskList.length>12 ?
-        <ul className='toDoPages'>
-          {pages.map((el,ind) => <li key={ind} name={el} onClick={() =>setCurrentPage(el)}>{el}</li> )}
-        </ul> : null}
+        {taskList
+          .slice((currentPage - 1) * 12, currentPage * 12)
+          .map((el, ind) => (
+            <Task
+              key={ind}
+              el={el}
+              ind={ind + (currentPage - 1) * 12}
+              handleTaskSubmit={handleTaskSubmit}
+              handleDeleteFromList={handleDeleteFromList}
+              handleAddToDoneList={handleAddToDoneList}
+              toMap={toMap}
+            />
+          ))}
+        {taskList.length > 12 ? (
+          <ul className="toDoPages">
+            {pages.map((el, ind) => (
+              <li key={ind} name={el} onClick={() => setCurrentPage(el)}>
+                {el}
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
       <div className="toDoForm">
-                  <ToDoAdd handleAddTask={handleAddTask} />
+      {toMap!=='toDo'? <p>Go to Current to add new task</p> :
+        <ToDoAdd handleAddTask={handleAddTask} />}
+        <p>{toMap==='toDo'? 'current' : toMap}</p>
+        <ul className="toDoTab">
+          <li>
+            <button
+              onClick={handleListChange}
+              className="addTaskButton"
+              name="toDo"
+            >
+              Current
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={handleListChange}
+              className="addTaskButton"
+              name="done"
+            >
+              Done
+            </button>
+          </li>
+          <li>
+            <button
+              onClick={handleListChange}
+              className="addTaskButton"
+              name="failed"
+            >
+              Failed
+            </button>
+          </li>
+        </ul>
       </div>
     </div>
   );

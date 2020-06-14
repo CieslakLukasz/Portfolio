@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import "./ToDo.scss";
 
 
-export default function ToDoForm({el, ind,  handleTaskSubmit, handleDeleteFromList}) {
+export default function ToDoForm({el, ind,  handleTaskSubmit, handleDeleteFromList, handleAddToDoneList, toMap}) {
   const [oneTask, setOneTask] = useState('');
   const [err, setErr]=useState('');
 
@@ -29,20 +29,21 @@ export default function ToDoForm({el, ind,  handleTaskSubmit, handleDeleteFromLi
       return;
     }
     setErr("");
-    console.log('one task false');
-    
     handleTaskSubmit(oneTask, false);
   }
 
   const handleDelete = () => {
     handleDeleteFromList(oneTask)
   }
+  const handleDone = () => {
+    handleAddToDoneList(oneTask)
+  }
 
 
     return (
         <form onSubmit={handleTaskSubmitOne}>
         <div className='taskHeader'><h2>
-        #{ind + 1} {err ? <p>{err}</p> : null} <div><span onClick={handleDelete}>&#128465;</span></div> </h2>
+        #{ind + 1} {err ? <p>{err}</p> : null} <div>{toMap!=='done'? <span onClick={handleDone}>&#10003;</span> : null}<span onClick={handleDelete}>&#128465;</span></div> </h2>
         <h1><input
         type="text"
         name="title"

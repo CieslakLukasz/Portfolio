@@ -31,6 +31,7 @@ const initialXY = {
   left: [...leftSide],
   bottom: [...bottomSide],
 }
+let counter = 0;
 
 export default function Rubic({winW}) {
   // we got 3 rows in X 3 in Y and 3 in Z so w need row patern:
@@ -39,7 +40,7 @@ export default function Rubic({winW}) {
   const [rubicByXZ, setRubicByXZ] = useState(initialXZ);
   const [rubicByXY, setRubicByXY] = useState(initialXY);
   const [rubicByYZ, setRubicByYZ] = useState(initialYZ);
-  const [shuffling, setShuffling] = useState(false);
+  let [shuffling, setShuffling] = useState(false);
   const [rubicControlers] = useState({
     top: [...transparent],
     front: [...transparent],
@@ -112,15 +113,43 @@ export default function Rubic({winW}) {
   };
 
 
-  let shuffle =() => {
-    if(!shuffling){
-      setShuffling(true);
-      setTimeout(() => {
-        setShuffling(false)
-      }, 1500);
-    }
-    let ind = Math.floor(Math.random()*9)
-    let indx = Math.floor(Math.random()*9)
+
+
+  let shuffleIt =() => {
+    if(shuffling===false){setShuffling(true)};
+
+    counter = counter + 1;
+
+    let ind = Math.floor(Math.random()*9);
+    let indx = Math.ceil(Math.random()*6);
+
+    setTimeout(() => {
+   if(counter<20){
+      switch (indx)
+      {
+        case 1: leftXZ(ind,true);
+        break
+        case 2: rightXZ(ind, true);
+        break
+        case 3: leftXY(ind, 'top', true);
+        break;
+        case 4: rightXY(ind, 'top', true);
+        break
+        case 5: leftYZ(ind, true);
+        break
+        case 6: rightYZ(ind, true);
+        break;
+}
+
+
+    }else{
+
+     setShuffling(false);
+     leftXY(ind, 'top', true);
+     counter = 0;
+      }
+    }, 50);
+ 
   }
 
 
@@ -159,14 +188,14 @@ const [rubicActive, setRubicActive]=useState({
 //changing other cubes to same pattern like one we move.
 
   //paterns of change
-const YZFromXY = () => {
-  let t = rubicByXY.top;
-  let f = rubicByXY.front;
-  let r = rubicByXY.right;
-  let bc = rubicByXY.back;
-  let l = rubicByXY.left;
-  let bt = rubicByXY.bottom;
-  setRubicByYZ({
+const YZFromXY = (arr = rubicByXY, setArr = setRubicByYZ) => {
+  let t = arr.top;
+  let f = arr.front;
+  let r = arr.right;
+  let bc = arr.back;
+  let l = arr.left;
+  let bt = arr.bottom;
+  setArr({
     top: [t[2], t[5],t[8],t[1],t[4],t[7],t[0],t[3],t[6]],
     front:[f[6],f[3],f[0],f[7],f[4],f[1],f[8],f[5],f[2]],
     right:[...black, ...black, r[6],r[3],r[0],r[7],r[4],r[1],r[8],r[5],r[2]],
@@ -191,14 +220,14 @@ const XZFromXY = () => {
     bottom:[...black, ...black, bt[0],bt[1],bt[2],bt[3],bt[4],bt[5],bt[6],bt[7],bt[8]],
   });
 }
-const XZFromYZ = () => {
-  let t = rubicByYZ.top;
-  let f = rubicByYZ.front;
-  let r = rubicByYZ.right;
-  let bc = rubicByYZ.back;
-  let l = rubicByYZ.left;
-  let bt = rubicByYZ.bottom;
-  setRubicByXZ({
+const XZFromYZ = (arr = rubicByYZ, setArr = setRubicByXZ) => {
+  let t = arr.top;
+  let f = arr.front;
+  let r = arr.right;
+  let bc = arr.back;
+  let l = arr.left;
+  let bt = arr.bottom;
+  setArr({
     top: [t[2], t[5],t[8],t[1],t[4],t[7],t[0],t[3],t[6]],
     front:[f[2],f[5],f[8],f[1],f[4],f[7],f[0],f[3],f[6]],
     right:[r[26],r[25],r[24],r[23],r[22],r[21],r[20],r[19],r[18]],
@@ -223,14 +252,14 @@ const XYFromYZ = () => {
     bottom:[bt[2],bt[5],bt[8],bt[1],bt[4],bt[7],bt[0],bt[3],bt[6]],
   });
 }
-const XYFromXZ = () => {
-  let t = rubicByXZ.top;
-  let f = rubicByXZ.front;
-  let r = rubicByXZ.right;
-  let bc = rubicByXZ.back;
-  let l = rubicByXZ.left;
-  let bt = rubicByXZ.bottom;
-  setRubicByXY({
+const XYFromXZ = (arr = rubicByXZ, setArr = setRubicByXY) => {
+  let t = arr.top;
+  let f = arr.front;
+  let r = arr.right;
+  let bc = arr.back;
+  let l = arr.left;
+  let bt = arr.bottom;
+  setArr({
     top: [t[8], t[7],t[6],t[5],t[4],t[3],t[2],t[1],t[0]],
     front:[...f],
     right:[r[6],r[3],r[0],r[7],r[4],r[1],r[8],r[5],r[2]],
@@ -259,6 +288,7 @@ const YZFromXZ = () => {
 
   //change 2nd cube after we move some side and show controlers again
   useEffect(() => {
+
     if(controlersActive){
       return;
     }
@@ -268,13 +298,21 @@ const YZFromXZ = () => {
       XYFromXZ()}
     if(rubicActive.XY){
       XZFromYZ()}
-            setTimeout(() => {
+    if(shuffling || counter===1){
+
+        shuffleIt();
+      }else{
+                    setTimeout(() => {
             toggleControlersActive(true)
-          }, 1150)
+          }, 1100)}
+
+
   }, [XZstyle, XYstyle, YZstyle])
   // change rotations to start point after that swap pattern on cube we just moved (3rd one) to same as rest, and showing anther one visable same time
   useEffect(() => {
-  if(!controlersActive){ return}
+  if(!controlersActive && !shuffling){ return}
+
+  
 setXZstyle({
   left: 0,
   mid: 0,
@@ -315,14 +353,14 @@ if(rubicActive.XY){
 //then above we change YZ (2nd) in first useEffect and in 2nd useEffect we set rotation to 0 again
 // then we change our XZ (3rd one, we just moved) pattern so all 3 paterns gona be same and ready for next move
   let leftXZ = (ind, shuffle, arr = setRubicByXY) => {
-    let time;
-    if(shuffle){time=0}else{
-      time=100;
-      toggleControlersActive(false);
+    let time = 100;
+    if(shuffle){time=0}
+
+    toggleControlersActive(false);
     setRubicActive({ XZ:true,
       XY:false,
       YZ: false});
-    }
+
       setTimeout(() => {
          if (ind === 0 || ind === 1 || ind === 2) {
       arr(prev => ({...prev,
@@ -333,7 +371,6 @@ if(rubicActive.XY){
         left: [prev.front[2],prev.left[1],prev.left[2],prev.front[1],prev.left[4],prev.left[5],prev.front[0],prev.left[7],prev.left[8]],
         bottom: [...prev.bottom],
       }))
-      if(shuffle){return}
       setXZstyle((prev) => ({ ...prev, left: prev.left + 90 }));
     } else if (ind === 3 || ind === 4 || ind === 5) {
 
@@ -345,7 +382,6 @@ if(rubicActive.XY){
         left: [prev.left[0],prev.front[5],prev.left[2],prev.left[3],prev.front[4],prev.left[5],prev.left[6],prev.front[3],prev.left[8]],
        bottom: [...prev.bottom],
       }))
-      if(shuffle){return}
       setXZstyle((prev) => ({ ...prev, mid: prev.mid + 90 }));
     } else {
 
@@ -357,20 +393,17 @@ top: [...prev.top],
         left: [prev.left[0],prev.left[1],prev.front[8],prev.left[3],prev.left[4],prev.front[7],prev.left[6],prev.left[7],prev.front[6],],
         bottom: [prev.bottom[2],prev.bottom[5],prev.bottom[8],prev.bottom[1],prev.bottom[4],prev.bottom[7],prev.bottom[0],prev.bottom[3],prev.bottom[6]],
       }))
-      if(shuffle){return}
       setXZstyle((prev) => ({ ...prev, right: prev.right + 90 }));
     }
       }, time);
   };
   let rightXZ = (ind, shuffle, arr = setRubicByXY) => {
-    let time;
-    if(shuffle){time=0}else{
-      time=100;
+    let time=100;
+    if(shuffle){time=0}
       toggleControlersActive(false);
     setRubicActive({ XZ:true,
       XY:false,
       YZ: false});
-    }
 
       setTimeout(() => {
          if (ind === 0 || ind === 1 || ind === 2) {
@@ -382,7 +415,6 @@ top: [...prev.top],
             left: [prev.back[24],prev.left[1],prev.left[2],prev.back[25],prev.left[4],prev.left[5],prev.back[26],prev.left[7],prev.left[8]],
             bottom: [...prev.bottom],
           }))
-          if(shuffle){return}
       setXZstyle((prev) => ({ ...prev, left: prev.left - 90 }));
     } else if (ind === 3 || ind === 4 || ind === 5) {
       arr(prev => ({...prev,
@@ -393,7 +425,6 @@ top: [...prev.top],
         left: [prev.left[0],prev.back[21],prev.left[2],prev.left[3],prev.back[22],prev.left[5],prev.left[6],prev.back[23],prev.left[8]],
        bottom: [...prev.bottom],
       }))
-      if(shuffle){return}
       setXZstyle((prev) => ({ ...prev, mid: prev.mid - 90 }));
     } else {
       arr(prev => ({...prev,
@@ -404,20 +435,18 @@ top: [...prev.top],
                 left: [prev.left[0],prev.left[1],prev.back[18],prev.left[3],prev.left[4],prev.back[19],prev.left[6],prev.left[7],prev.back[20],],
                 bottom: [prev.bottom[6],prev.bottom[3],prev.bottom[0],prev.bottom[7],prev.bottom[4],prev.bottom[1],prev.bottom[8],prev.bottom[5],prev.bottom[2]],
               }))
-              if(shuffle){return}
       setXZstyle((prev) => ({ ...prev, right: prev.right - 90 }));
     }
       }, time);
   };
   let leftXY = (ind, site, shuffle, arr = setRubicByYZ) => {
-    let time;
-    if(shuffle){time=0}else{
-      time=100;
+    let time=100;
+    if(shuffle){time=0}
       toggleControlersActive(false);
     setRubicActive({ XZ:false,
       XY:true,
       YZ: false});
-    }
+
 
       setTimeout(() => {
          if (site === "top") {
@@ -430,7 +459,6 @@ top: [...prev.top],
           left: [prev.top[8],prev.left[1],prev.left[2],prev.top[5],prev.left[4],prev.left[5],prev.top[2],prev.left[7],prev.left[8]],
           bottom: [prev.left[0],prev.bottom[1],prev.bottom[2],prev.left[3],prev.bottom[4],prev.bottom[5],prev.left[6],prev.bottom[7],prev.bottom[8]]
         }))
-        if(shuffle){return}
         setXYstyle((prev) => ({ ...prev, right: prev.right - 90 }));
       } else if (ind === 3 || ind === 4 || ind === 5) {
         arr(prev => ({...prev,
@@ -441,7 +469,6 @@ top: [...prev.top],
           left: [prev.left[0],prev.top[7],prev.left[2],prev.left[3],prev.top[4],prev.left[5],prev.left[6],prev.top[1],prev.left[8]],
           bottom: [prev.bottom[0],prev.left[1],prev.bottom[2],prev.bottom[3],prev.left[4],prev.bottom[5],prev.bottom[6],prev.left[7],prev.bottom[8]]
         }))
-        if(shuffle){return}
         setXYstyle((prev) => ({ ...prev, mid: prev.mid - 90 }));
       } else {
         arr(prev => ({...prev,
@@ -452,7 +479,6 @@ top: [...prev.top],
           left: [prev.left[0],prev.left[1],prev.top[6],prev.left[3],prev.left[4],prev.top[3],prev.left[6],prev.left[7],prev.top[0]],
           bottom: [prev.bottom[0],prev.bottom[1],prev.left[2],prev.bottom[3],prev.bottom[4],prev.left[5],prev.bottom[6],prev.bottom[7],prev.left[8]]
         }))
-        if(shuffle){return}
         setXYstyle((prev) => ({ ...prev, left: prev.left - 90 }));
       }
     } else {
@@ -465,7 +491,6 @@ top: [...prev.top],
           left: [prev.top[8],prev.left[1],prev.left[2],prev.top[5],prev.left[4],prev.left[5],prev.top[2],prev.left[7],prev.left[8]],
           bottom: [prev.left[0],prev.bottom[1],prev.bottom[2],prev.left[3],prev.bottom[4],prev.bottom[5],prev.left[6],prev.bottom[7],prev.bottom[8]]
         }))
-        if(shuffle){return}
         setXYstyle((prev) => ({ ...prev, right: prev.right - 90 }));
       } else if (ind === 4 || ind === 1 || ind === 7) {
         arr(prev => ({...prev,
@@ -476,7 +501,6 @@ top: [...prev.top],
           left: [prev.left[0],prev.top[7],prev.left[2],prev.left[3],prev.top[4],prev.left[5],prev.left[6],prev.top[1],prev.left[8]],
           bottom: [prev.bottom[0],prev.left[1],prev.bottom[2],prev.bottom[3],prev.left[4],prev.bottom[5],prev.bottom[6],prev.left[7],prev.bottom[8]]
         }))
-        if(shuffle){return}
         setXYstyle((prev) => ({ ...prev, mid: prev.mid - 90 }));
       } else {
         arr(prev => ({...prev,
@@ -487,7 +511,6 @@ top: [...prev.top],
           left: [prev.left[0],prev.left[1],prev.top[6],prev.left[3],prev.left[4],prev.top[3],prev.left[6],prev.left[7],prev.top[0]],
           bottom: [prev.bottom[0],prev.bottom[1],prev.left[2],prev.bottom[3],prev.bottom[4],prev.left[5],prev.bottom[6],prev.bottom[7],prev.left[8]]
         }))
-        if(shuffle){return}
         setXYstyle((prev) => ({ ...prev, left: prev.left - 90 }));
       }
     }
@@ -514,7 +537,6 @@ top: [...prev.top],
           left: [prev.bottom[0],prev.left[1],prev.left[2],prev.bottom[3],prev.left[4],prev.left[5],prev.bottom[6],prev.left[7],prev.left[8]],
           bottom: [prev.right[18],prev.bottom[1],prev.bottom[2],prev.right[21],prev.bottom[4],prev.bottom[5],prev.right[24],prev.bottom[7],prev.bottom[8]]
         }))
-        if(shuffle){return}
         setXYstyle((prev) => ({ ...prev, right: prev.right + 90 }));
       } else if (ind === 3 || ind === 4 || ind === 5) {
         arr(prev => ({...prev,
@@ -525,7 +547,6 @@ top: [...prev.top],
           left: [prev.left[0],prev.bottom[1],prev.left[2],prev.left[3],prev.bottom[4],prev.left[5],prev.left[6],prev.bottom[7],prev.left[8]],
           bottom: [prev.bottom[0],prev.right[19],prev.bottom[2],prev.bottom[3],prev.right[22],prev.bottom[5],prev.bottom[6],prev.right[25],prev.bottom[8]]
         }))
-        if(shuffle){return}
         setXYstyle((prev) => ({ ...prev, mid: prev.mid + 90 }));
       } else {
         arr(prev => ({...prev,
@@ -536,7 +557,6 @@ top: [...prev.top],
           left: [prev.left[0],prev.left[1],prev.bottom[2],prev.left[3],prev.left[4],prev.bottom[5],prev.left[6],prev.left[7],prev.bottom[8]],
           bottom: [prev.bottom[0],prev.bottom[1],prev.right[20],prev.bottom[3],prev.bottom[4],prev.right[23],prev.bottom[6],prev.bottom[7],prev.right[26]]
         }))
-        if(shuffle){return}
         setXYstyle((prev) => ({ ...prev, left: prev.left + 90 }));
       }
     } else {
@@ -549,7 +569,6 @@ top: [...prev.top],
           left: [prev.bottom[0],prev.left[1],prev.left[2],prev.bottom[3],prev.left[4],prev.left[5],prev.bottom[6],prev.left[7],prev.left[8]],
           bottom: [prev.right[18],prev.bottom[1],prev.bottom[2],prev.right[21],prev.bottom[4],prev.bottom[5],prev.right[24],prev.bottom[7],prev.bottom[8]]
         }))
-        if(shuffle){return}
         setXYstyle((prev) => ({ ...prev, right: prev.right + 90 }));
       } else if (ind === 4 || ind === 1 || ind === 7) {
        arr(prev => ({...prev,
@@ -560,7 +579,6 @@ top: [...prev.top],
           left: [prev.left[0],prev.bottom[1],prev.left[2],prev.left[3],prev.bottom[4],prev.left[5],prev.left[6],prev.bottom[7],prev.left[8]],
           bottom: [prev.bottom[0],prev.right[19],prev.bottom[2],prev.bottom[3],prev.right[22],prev.bottom[5],prev.bottom[6],prev.right[25],prev.bottom[8]]
         }))
-        if(shuffle){return}
         setXYstyle((prev) => ({ ...prev, mid: prev.mid + 90 }));
       } else {
        arr(prev => ({...prev,
@@ -571,7 +589,6 @@ top: [...prev.top],
           left: [prev.left[0],prev.left[1],prev.bottom[2],prev.left[3],prev.left[4],prev.bottom[5],prev.left[6],prev.left[7],prev.bottom[8]],
           bottom: [prev.bottom[0],prev.bottom[1],prev.right[20],prev.bottom[3],prev.bottom[4],prev.right[23],prev.bottom[6],prev.bottom[7],prev.right[26]]
         }))
-        if(shuffle){return}
         setXYstyle((prev) => ({ ...prev, left: prev.left + 90 }));
       }
     }
@@ -580,13 +597,12 @@ top: [...prev.top],
   };
   let leftYZ = (ind, shuffle, arr = setRubicByXZ) => {
     let time;
-    if(shuffle){time=0}else{
-      time=100;
+    if(shuffle){time=0}
       toggleControlersActive(false);
       setRubicActive({ XZ:false,
         XY:false,
         YZ: true});
-      }
+
 
       setTimeout(() => {
          if (ind === 0 || ind === 3 || ind === 6) {
@@ -598,7 +614,6 @@ top: [...prev.top],
             left: [prev.left[2],prev.left[5],prev.left[8],prev.left[1],prev.left[4],prev.left[7],prev.left[0],prev.left[3],prev.left[6]],
             bottom: [...black,...black, prev.back[8],prev.bottom[19],prev.bottom[20],prev.back[5],prev.bottom[22],prev.bottom[23],prev.back[2],prev.bottom[25],prev.bottom[26]]
           }))
-          if(shuffle){return}
       setYZstyle((prev) => ({ ...prev, left: prev.left - 90 }));
     } else if (ind === 1 || ind === 4 || ind === 7) {
      arr(prev => ({...prev,
@@ -609,7 +624,6 @@ top: [...prev.top],
         left: [...prev.left],
         bottom: [...black,...black, prev.bottom[18], prev.back[7], prev.bottom[20],prev.bottom[21],prev.back[4],prev.bottom[23],prev.bottom[24],prev.back[1],prev.bottom[26]]
       }))
-      if(shuffle){return}
       setYZstyle((prev) => ({ ...prev, mid: prev.mid - 90 }));
     } else {
       arr(prev => ({...prev,
@@ -620,7 +634,6 @@ top: [...prev.top],
         left: [...prev.left],
         bottom: [...black,...black, prev.bottom[18],prev.bottom[19],prev.back[6],prev.bottom[21],prev.bottom[22],prev.back[3],prev.bottom[24],prev.bottom[25], prev.back[0]]
       }))
-      if(shuffle){return}
       setYZstyle((prev) => ({ ...prev, right: prev.right - 90 }));
     }
       }, time);
@@ -628,12 +641,11 @@ top: [...prev.top],
   };
   let rightYZ = (ind, shuffle, arr = setRubicByXZ) => {
     let time;
-    if(shuffle){time=0}else{
-      time=100;
+    if(shuffle){time=0}
       toggleControlersActive(false);
       setRubicActive({ XZ:false,
         XY:false,
-        YZ: true});}
+        YZ: true});
       setTimeout(() => {
          if (ind === 0 || ind === 3 || ind === 6) {
           arr(prev => ({...prev,
@@ -644,7 +656,6 @@ top: [...prev.top],
             left: [prev.left[6],prev.left[3],prev.left[0],prev.left[7],prev.left[4],prev.left[1],prev.left[8],prev.left[5],prev.left[2]],
             bottom: [...black,...black, prev.front[0],prev.bottom[19],prev.bottom[20],prev.front[3],prev.bottom[22],prev.bottom[23],prev.front[6],prev.bottom[25],prev.bottom[26]]
           }))
-          if(shuffle){return}
       setYZstyle((prev) => ({ ...prev, left: prev.left + 90 }));
     } else if (ind === 1 || ind === 4 || ind === 7) {
       arr(prev => ({...prev,
@@ -655,7 +666,6 @@ top: [...prev.top],
         left: [...prev.left],
         bottom: [...black,...black, prev.bottom[18], prev.front[1], prev.bottom[20],prev.bottom[21],prev.front[4],prev.bottom[23],prev.bottom[24],prev.front[7],prev.bottom[26]]
       }))
-      if(shuffle){return}
       setYZstyle((prev) => ({ ...prev, mid: prev.mid + 90 }));
     } else {
       arr(prev => ({...prev,
@@ -666,7 +676,6 @@ top: [...prev.top],
         left: [...prev.left],
         bottom: [...black,...black, prev.bottom[18],prev.bottom[19],prev.front[2],prev.bottom[21],prev.bottom[22],prev.front[5],prev.bottom[24],prev.bottom[25], prev.front[8]]
       }))
-      if(shuffle){return}
       setYZstyle((prev) => ({ ...prev, right: prev.right + 90 }));
     }
       }, time);
@@ -696,7 +705,7 @@ top: [...prev.top],
       <img onMouseEnter={turnDown} onMouseOut={stop} className='movedown' src='/assets/images/arrow.svg' alt=''/>
       </div>
       </div>
-      <button onClick={shuffle} className='addTaskButton'>Shuffle!</button>
+      <button onClick={shuffleIt} className='addTaskButton'>Shuffle!</button>
       <button onClick={solve} className='addTaskButton'>Solve!</button>
     </div>
       <div

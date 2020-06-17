@@ -1,68 +1,58 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Portfolio - all i learned for last 3 months
 
-## Available Scripts
+Simple app - imitation of desc with some To do list, rubic cube and memory game.
+This app allows me consolidate knowledge from online courses and workshops.
+Create with React and bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-In the project directory, you can run:
+### GitHub pages of this app:
+https://cieslaklukasz.github.io
 
-### `npm start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Technology
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+* React
+* React router
+* JavaScript
+* ES5/6
+* Firebase
+* RWD
 
-### `npm test`
+## Features
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### To Do list:
+* All tasks saved to firebase
+* Current / done / failed tasks - you can choose what you wanna display
+* Done / Delete buttons
+* Editing in form of stick-notes
+* Sorted by priority
 
-### `npm run build`
+### Memory:
+* Simple memory game with options from 1 to 21 pairs
+* Changeable cards back
+* Timer and counter of moves as scoreboard
+* Random images so you dont get bored ;)
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Rubic Cube:
+* Full Rubic Cube in 3d in JavaScript
+* Shuffle and Solve buttons
+* Move around animations
+* Arrow which turn cube around for better angle
+* Controllers on each small cube to move cubes walls
+* Full animation of moves in each direction
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+### Clock:
+* Well placed analog clock in background
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Social Media buttons:
+* Links to socials
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Project Status
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Work in progres. </br>
+Soon:
+* Weather page with weather-map based on @amcharts/amcharts4-geodata.
+* Better shuffling of Rubic Cube.
+* Score board of Memory game saving to firebase
+* Autentication via firebase for own to do list / scoreboard with names
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify

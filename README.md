@@ -1,4 +1,4 @@
-# Portfolio - all i learned for last 3 months
+# Portfolio - all I learned for last 3 months
 
 Simple app - imitation of desc with some To do list, rubic cube and memory game.
 This app allows me consolidate knowledge from online courses and workshops.

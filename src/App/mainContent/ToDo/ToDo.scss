@@ -4,6 +4,32 @@
   display: flex;
   position: relative;
 }
+.addTaskButton {
+  width: 100%;
+  height: fit-content;
+  padding: 1vw;
+  color: var(--fonts-color);
+  background-color: var(--main-color);
+
+}
+.addTaskButton:hover {
+
+  background-color: var(--hover-color);
+}
+.toDoTab {
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 1vw;
+  li {
+    margin: 0.5vw 0;
+    width: 100%;
+  }
+}
+
 .toDoForm {
   background-color: var(--hover-color);
   width: calc(30% - 4vw);
@@ -12,65 +38,57 @@
   padding: 1vw;
   margin: 1vw;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   position: absolute;
   right: 0;
   top: 0;
-  form {
+  p {
     width: 100%;
-    formset {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      label {
-        width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin: 1px 0;
-      }
-      input[type="text"] {
-        width: 100%;
-      }
-      textarea {
-        max-width: 95%;
-        width: 95%;
-        background-color: var(--main-color);
-      }
-      input,
-      select {
-        color: var(--fonts-color);
-        background-color: var(--main-color);
-      }
-    }
+    height: fit-content;
+    padding: calc(1vw + 2px);
+
   }
+  p::first-letter{
+    text-transform: capitalize;
+  }
+
 }
 
 .toDoCards {
   width: calc(70% - 6vw);
-  height: fit-content;
-  max-height: calc(100% - 13vw);
+  min-height:10vh;
+  height: calc(100% - 12vw);
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
   flex-wrap: wrap;
   position: absolute;
   left: 6vw;
+  .toDoPages{
+    position: absolute;
+    bottom:-1.5vw;
+    left: 37.5%;
+    width: 25%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+
+  }
   .oneTask {
     width: calc(25% - 16px);
-    height: 10vw;
+    height: calc(33% - 16px);
+    max-height: 10vw;
     font-size: 1.2vw;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    filter: saturate(40%);
     margin: 8px;
-    box-shadow: -8px 3px 18px -4px rgba(0, 0, 0, 0.75);
-    > div {
+    box-shadow: -8px 2px 4px -4px rgba(0, 0, 0, 0.75);
+    .taskHeader {
       width: 100%;
       h2 {
         width: 100%;
@@ -80,6 +98,9 @@
         justify-content: space-between;
         span {
           font-size: 0.8vw;
+          opacity: 0.8;
+          z-index:20;
+          cursor: pointer;
         }
       }
       h1 {
@@ -94,6 +115,8 @@
       height: fit-content;
       max-height: calc(100% - 4vw);
       overflow: hidden;
+      white-space: pre-wrap;
+      word-break: break-word;
     }
   }
 }
@@ -102,28 +125,232 @@
   height: 0;
   font-size: 1.2vw;
   position: absolute;
+  top: 50%;
+  left: 50%;
   z-index: 10;
   transition: all 0.5s ease-in-out;
   overflow: hidden;
+  form {
+    width: 95%;
+    height: 100%;
+  }
   h1 {
     margin: 0.5vw;
   }
+  .taskHeader {
+    font-size: 2vw;
+  h2 {
+      margin-top: 1vw;
+    span {
+      font-size: 2vw;
+    }
+  }
+
 }
+.dateAndTime {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+input, select, textarea {
+  background-color: transparent;
+  color: var(--fonts-color);
+  border: 0;
+  font-size: 1.8vw;
+  appearance: none;
+
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+
+
+}
+select {
+  padding: 0 5px;
+  border-width: 2px;
+  border-style: outset;
+  border-color: buttonface;
+  border-image: initial;
+  cursor: pointer;
+}
+.F4F48EClass:focus {
+  background-color:#F4F48E;
+
+}
+.B8DEB8Class:focus {
+  background-color: #B8DEB8;
+
+}
+.f7918aClass:focus {
+  background-color: #f7918a;
+}
+
+input[type=text] {
+  font-size: 2vw;
+  font-weight: bold;
+  width: 100%;
+  height: fit-content;
+  text-align: center;
+}
+textarea{
+  width: 100%;
+  height: calc(100% - 14vw);
+}
+input[type=submit] {
+  border-width: 2px;
+  border-style: outset;
+  border-color: buttonface;
+  border-image: initial;
+  cursor: pointer;
+}
+}
+
 .oneTask.bigTask.transition {
   width: 100%;
-  height: 40vw;
+  height:50vh;
+  max-height: calc(100vh - 90px - 14vw);
   font-size: 1.8vw;
   position: absolute;
-  box-shadow: -8px 3px 25px 4px rgba(0, 0, 0, 0.75);
+  top: 0;
+  left: 45%;
+  box-shadow: -8px 2px 25px 4px rgba(0, 0, 0, 0.75);
   z-index: 10;
   transition: all 0.5s ease-in-out;
-  > div {
-      font-size: 2vw;
+
+}
+
+.circle {
+  width: 1.2vw;
+  height: 1.2vw;background: rgba(145,232,66,1);
+  background: -moz-linear-gradient(-45deg, rgba(145,232,66,1) 0%, rgba(210,255,82,1) 100%);
+  background: -webkit-gradient(left top, right bottom, color-stop(0%, rgba(145,232,66,1)), color-stop(100%, rgba(210,255,82,1)));
+  background: -webkit-linear-gradient(-45deg, rgba(145,232,66,1) 0%, rgba(210,255,82,1) 100%);
+  background: -o-linear-gradient(-45deg, rgba(145,232,66,1) 0%, rgba(210,255,82,1) 100%);
+  background: -ms-linear-gradient(-45deg, rgba(145,232,66,1) 0%, rgba(210,255,82,1) 100%);
+  background: linear-gradient(135deg, rgba(145,232,66,1) 0%, rgba(210,255,82,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#91e842', endColorstr='#d2ff52', GradientType=1 );  border-radius: 50%;
+  position: absolute;
+  top: -0.6vw;
+  left: calc(50% - 0.6vw);
+  box-shadow: -2px 2px 2px 0 rgba(0, 0, 0, 0.75);
+}
+@media (max-width: 800px) {
+  .toDoMain {
+    height: calc(90vh - 40px);
+  }
+  .toDoForm {
+    width: 60%;
+    top: calc(100% - 24vw + 2px);
+    background-color: rgba(207,212,215, 0.5);
+
+    button {
+      width: 100%;
+    }
+    ul {
+      display: flex;
+      flex-direction: row;
+    }
+
+  }
+
+  .toDoCards {
+    width: 100%;
+    padding: 1px;
+    min-height:10vh;
+    height: calc(100% - 24vw);
+    left: 0;
+    .oneTask {
+      width: calc(33% - 16px);
+      height: calc(25% - 16px);
+      max-height: 24vw;
+      font-size: 3vw;
+
+      .taskHeader {
+        h2 {span {
+            font-size: 2.5vw;
+        }}
+      }
+    }
+  }
+  .oneTask.bigTask {
+    width: 0;
+    height: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    form {
+      width: 98%;
+      height: 100%;
+    }
+    .taskHeader {
+      font-size: 5vw;
     h2 {
         margin-top: 1vw;
       span {
-        font-size: 2vw;
+        font-size: 7vw;
       }
     }
+      }
+      .dateAndTime {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+  input, select, textarea {
+
+     font-size: 4vw;
+  }
+
+  select {
+    padding: 0 5px;;
+    border-width: 2px;
+    border-style: outset;
+    border-color: buttonface;
+    border-image: initial;
+    cursor: pointer;
+  }
+  .F4F48EClass:focus {
+    background-color:#F4F48E;
+  
+  }
+  .B8DEB8Class:focus {
+    background-color: #B8DEB8;
+  
+  }
+  .f7918aClass:focus {
+    background-color: #f7918a;
+  }
+
+  input[type=text] {
+    font-size: 5vw;
+  }
+  textarea{
+    width: 100%;
+    height: calc(100% - 34vw);
+  }
+  input[type=submit] {
+    border-width: 2px;
+    border-style: outset;
+    border-color: buttonface;
+    border-image: initial;
+    cursor: pointer;
+  }
+  }
+  
+  .oneTask.bigTask.transition {
+    width: 95%;
+    height:50vh;
+    max-height: calc(100vh - 90px - 14vw);
+    font-size: 5vw;
+    position: absolute;
+    top: 0;
+    left: 0;
+    box-shadow: -8px 2px 25px 4px rgba(0, 0, 0, 0.75);
+    z-index: 10;
+    transition: all 0.5s ease-in-out;
+
   }
 }

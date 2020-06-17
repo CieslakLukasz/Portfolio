@@ -54,10 +54,10 @@ export default function CounterWatch({ watch, counter, succesCounter, pairs ,tur
       <h1>Time: {run.time} s</h1>
       <table className='score_table'>
         <tr>
-          <th>Partia</th>
-          <th>Ilosc par</th>
-          <th>Czas</th>
-          <th>Ilośc tur</th>
+          <th>Game id</th>
+          <th>Pairs</th>
+          <th>Time</th>
+          <th>Turns</th>
         </tr>
         {!data
           ? null

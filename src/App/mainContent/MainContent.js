@@ -1,10 +1,12 @@
 import React from "react";
 import { HashRouter, Route, Switch } from "react-router-dom";
-import Header from "./header/Header";
+import Header from "./Header/Header";
 import Start from './Start/Start';
-import About from './about/About';
+import About from './About/About';
 import Memory from './Memory/Memory';
 import ToDo from './ToDo/ToDo';
+import Rubic from './RubicCube/Rubic';
+
 
 export default function MainContent({mediasData, winW}) {
   return (
@@ -15,7 +17,7 @@ export default function MainContent({mediasData, winW}) {
           <Route exact path="/" component={ToDo} />
           <Route path="/weather" component={Start} />
           <Route path="/memory" render={() =><Memory winW={winW}/>} />
-          <Route path="/exchange" component={Start} />
+          <Route path="/rubiccube" render={()=> <Rubic winW={winW} />} />
           <Route path="/about" render={() =><About mediasData={mediasData}/>} />
         </Switch>
       </HashRouter>

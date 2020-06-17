@@ -30,7 +30,7 @@
 }
 .shuffleInfo {
   position: relative;
-  top: -2vw;
+  top: 0;
   color: var(--fonts-color);
 }
 
@@ -203,6 +203,7 @@
 
     width: 100%;
     flex-direction: row;
+    background-color: rgba(213,218,222, 0.75);
     align-items: flex-start;
     top: calc(55vh + 50px);
     z-index: 300;
@@ -218,6 +219,7 @@
   .memory_game {
     margin-top: 4vw;
     width: 90%;
+    height: calc(100% - 4vw);
 
 
 

@@ -9,7 +9,8 @@ import Clock from './LeftMenu/Clock/Clock';
 
 
 function App() {
-  const [winW, setWinW] = useState(window.innerWidth)
+  const [winW, setWinW] = useState(window.innerWidth);
+  const [load, setLoad] = useState(false);
   const [mediasData] = useState([{
     name: 'linkedin',
     url: 'https://www.linkedin.com/in/lukaszcieslak90/',
@@ -41,8 +42,10 @@ function App() {
 
 
 
+
   return (
-    <div className="App">
+
+    <div className="App" style={{backgroundImage: 'url("/assets/images/background/desc1-min.jpg")'}}>
       <div className="wrapper">
         <div className="item1">
           <MainContent mediasData={mediasData} winW={winW}/>
